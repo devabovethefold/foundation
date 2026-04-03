@@ -1,13 +1,22 @@
 ---
+import Drawer from '@landmarks/Drawer.astro'
+import Footer from '@landmarks/Footer.astro'
 import Head from '@landmarks/Head.astro'
+import Header from '@landmarks/Header.astro'
+import Hero from '@landmarks/Hero.astro'
+
+import '@styles/layouts/common.css'
 ---
 
 <html lang="en-US">
   <Head />
-
   <body>
+    <Header />
     <main>
+      <Hero />
       <slot />
     </main>
+    <Footer />
+    <Drawer />
   </body>
 </html>
