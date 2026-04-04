@@ -1,7 +1,7 @@
 @reference "tailwindcss";
 
-dialog.drawer {
-  @apply fixed inset-y-0 right-0 z-50 m-0 ml-auto h-screen w-fit max-w-screen max-h-screen flex-col space-y-8 border-none bg-white p-6 shadow-2xl focus:outline-none dark:bg-zinc-900;
+dialog {
+  @apply fixed inset-y-0 right-0 z-50 m-0 ml-auto h-screen max-h-screen w-fit max-w-screen flex-col space-y-8 border-none bg-white p-6 shadow-2xl focus:outline-none dark:bg-zinc-900;
 
   transition:
     transform 300ms ease-out,
@@ -10,18 +10,18 @@ dialog.drawer {
   transform: translateX(100%);
 }
 
-dialog.drawer[open] {
+dialog[open] {
   @apply flex;
   transform: translateX(0);
 }
 
 @starting-style {
-  dialog.drawer[open] {
+  dialog[open] {
     transform: translateX(100%);
   }
 }
 
-dialog.drawer::backdrop {
+dialog::backdrop {
   transition:
     background-color 300ms ease-out,
     display 300ms ease-out allow-discrete,
@@ -30,12 +30,12 @@ dialog.drawer::backdrop {
   backdrop-filter: blur(4px);
 }
 
-dialog.drawer[open]::backdrop {
+dialog[open]::backdrop {
   background-color: oklch(from var(--base-950) l c h / 0.6);
 }
 
 @starting-style {
-  dialog.drawer[open]::backdrop {
+  dialog[open]::backdrop {
     background-color: transparent;
   }
 }

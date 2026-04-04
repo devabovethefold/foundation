@@ -2,5 +2,5 @@
 @reference "@styles/base/content.css";
 
 header {
-  @apply content;
+  @apply content py-20;
 }

@@ -14,7 +14,10 @@
 
   /* The actual space available for content columns */
   /* Calculation: (Available Space) - (Gaps) - (Edge Margins) */
-  --content-width: min(calc(100% - var(--gap-total) - (2 * var(--edge-width))), calc(var(--content-max) - (11 * var(--gap-width))));
+  --content-width: min(
+    calc(100% - var(--gap-total) - (2 * var(--edge-width))),
+    calc(var(--content-max) - (11 * var(--gap-width)))
+  );
 
   /* Width of a single column in our 12-column content area */
   --col-width: calc(var(--content-width) / 12);

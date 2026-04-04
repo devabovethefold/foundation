@@ -2,7 +2,13 @@ const storageKey = 'theme'
 
 const getPreference = () => {
   const preference = localStorage.getItem(storageKey)
-  if (preference) return preference.replace(/^"|"$/g, '')
+  if (preference) {
+    try {
+      return JSON.parse(preference)
+    } catch (e) {
+      return preference.replace(/^"|"$/g, '')
+    }
+  }
 }
 
 const getStorage = () => {
@@ -10,7 +16,7 @@ const getStorage = () => {
 }
 
 const setStorage = (theme) => {
-  localStorage.setItem(storageKey, theme)
+  localStorage.setItem(storageKey, JSON.stringify(theme))
 }
 
 const setTheme = (theme) => {

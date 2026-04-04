@@ -2,16 +2,26 @@
 import { defineConfig } from 'astro/config'
 
 import alpinejs from '@astrojs/alpinejs'
-import cloudflare from '@astrojs/cloudflare'
+import icon from 'astro-icon'
 import sitemap from '@astrojs/sitemap'
 import tailwindcss from '@tailwindcss/vite'
 
-// https://astro.build/config
 export default defineConfig({
-  integrations: [alpinejs(), sitemap()],
-  adapter: cloudflare(),
-
+  integrations: [
+    alpinejs({ entrypoint: './src/utilities/alpine/index.ts' }),
+    sitemap(),
+    icon({
+      include: {
+        mdi: ['menu', 'moon-waning-crescent', 'white-balance-sunny']
+      }
+    })
+  ],
   vite: {
     plugins: [tailwindcss()]
   }
 })
+
+// provider: fontProviders.adobe({ id: 'your-id' })
+// provider: fontProviders.bunny()
+// provider: fontProviders.fontshare()
+// provider: fontProviders.google()

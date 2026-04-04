@@ -131,29 +131,75 @@
   --index: 0;
 }
 
-.stagger > *:nth-child(2) { --index: 1; }
-.stagger > *:nth-child(3) { --index: 2; }
-.stagger > *:nth-child(4) { --index: 3; }
-.stagger > *:nth-child(5) { --index: 4; }
-.stagger > *:nth-child(6) { --index: 5; }
-.stagger > *:nth-child(7) { --index: 6; }
-.stagger > *:nth-child(8) { --index: 7; }
-.stagger > *:nth-child(9) { --index: 8; }
-.stagger > *:nth-child(10) { --index: 9; }
-.stagger > *:nth-child(11) { --index: 10; }
-.stagger > *:nth-child(12) { --index: 11; }
-.stagger > *:nth-child(13) { --index: 12; }
-.stagger > *:nth-child(14) { --index: 13; }
-.stagger > *:nth-child(15) { --index: 14; }
-.stagger > *:nth-child(16) { --index: 15; }
-.stagger > *:nth-child(17) { --index: 16; }
-.stagger > *:nth-child(18) { --index: 17; }
-.stagger > *:nth-child(19) { --index: 18; }
-.stagger > *:nth-child(20) { --index: 19; }
-.stagger > *:nth-child(21) { --index: 20; }
-.stagger > *:nth-child(22) { --index: 21; }
-.stagger > *:nth-child(23) { --index: 22; }
-.stagger > *:nth-child(24) { --index: 23; }
+.stagger > *:nth-child(2) {
+  --index: 1;
+}
+.stagger > *:nth-child(3) {
+  --index: 2;
+}
+.stagger > *:nth-child(4) {
+  --index: 3;
+}
+.stagger > *:nth-child(5) {
+  --index: 4;
+}
+.stagger > *:nth-child(6) {
+  --index: 5;
+}
+.stagger > *:nth-child(7) {
+  --index: 6;
+}
+.stagger > *:nth-child(8) {
+  --index: 7;
+}
+.stagger > *:nth-child(9) {
+  --index: 8;
+}
+.stagger > *:nth-child(10) {
+  --index: 9;
+}
+.stagger > *:nth-child(11) {
+  --index: 10;
+}
+.stagger > *:nth-child(12) {
+  --index: 11;
+}
+.stagger > *:nth-child(13) {
+  --index: 12;
+}
+.stagger > *:nth-child(14) {
+  --index: 13;
+}
+.stagger > *:nth-child(15) {
+  --index: 14;
+}
+.stagger > *:nth-child(16) {
+  --index: 15;
+}
+.stagger > *:nth-child(17) {
+  --index: 16;
+}
+.stagger > *:nth-child(18) {
+  --index: 17;
+}
+.stagger > *:nth-child(19) {
+  --index: 18;
+}
+.stagger > *:nth-child(20) {
+  --index: 19;
+}
+.stagger > *:nth-child(21) {
+  --index: 20;
+}
+.stagger > *:nth-child(22) {
+  --index: 21;
+}
+.stagger > *:nth-child(23) {
+  --index: 22;
+}
+.stagger > *:nth-child(24) {
+  --index: 23;
+}
 
 @utility stagger-item {
   animation-delay: calc(var(--stagger, 100ms) * var(--index));
@@ -182,7 +228,9 @@
    Reduced motion fallback
 ----------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     animation-delay: -1ms !important;
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;

@@ -18,7 +18,7 @@
 
 /* landmarks */
 @import './landmarks/drawer.css';
-/* @import './landmarks/footer.css';
-@import './landmarks/header.css';
-@import './landmarks/hero.css'; */
 @import './landmarks/sections.css';
+
+/* components */
+@import './components/buttons.css';
