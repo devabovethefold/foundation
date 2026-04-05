@@ -1,20 +1,22 @@
 @import 'tailwindcss';
 
 /* abstracts */
+@import './abstracts/tokens.css';
 @import './abstracts/spacing.css';
 @import './abstracts/fonts.css';
 @import './abstracts/palette.css';
-@import './abstracts/spacing.css';
+
+/* themes */
+@import './themes/light.css';
+@import './themes/dark.css';
+@import './themes/styles.css';
 
 /* base */
 @import './base/colors.css';
 @import './base/content.css';
 @import './base/keyframes.css';
+@import './base/layers.css';
 @import './base/typography.css';
-
-/* themes */
-@import './themes/light.css';
-@import './themes/dark.css';
 
 /* landmarks */
 @import './landmarks/drawer.css';
@@ -22,3 +24,9 @@
 
 /* components */
 @import './components/buttons.css';
+@import './components/tiles.css';
+@import './components/cards.css';
+@import './components/tabs.css';
+@import './components/accordions.css';
+@import './components/badges.css';
+@import './components/forms.css';

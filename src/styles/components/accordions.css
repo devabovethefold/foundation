@@ -1,0 +1,71 @@
+@reference "tailwindcss";
+
+/**
+  * Semantic Accordion (Details/Summary)
+  * -------------------------------------------------------------------
+  * Uses native HTML5 elements for zero-JS accessibility.
+  * -------------------------------------------------------------------
+  */
+
+/* The Container */
+details.accordion {
+  @apply surface shadow-sm mb-4;
+  border-radius: var(--radius-accordion);
+  border-width: var(--border-weight);
+  overflow: hidden;
+  list-style: none;
+  
+  /* Modern CSS Animation for Discrete States */
+  interpolate-size: allow-keywords;
+  transition: all 0.3s ease, height 0.3s ease allow-discrete;
+
+  &[open] {
+    @apply shadow-md;
+  }
+}
+
+/* The Trigger */
+details.accordion summary {
+  @apply flex items-center justify-between font-bold transition-all;
+  @apply text-neutral-hi hover:bg-neutral-lo/50 cursor-pointer list-none;
+  padding: var(--spacing-accordion);
+  outline: none;
+  border-bottom: 0px solid transparent;
+
+  /* Custom Chevron using pseudo-element */
+  &::after {
+    content: "";
+    @apply size-5 transition-transform duration-300 opacity-60;
+    mask: url("https://api.iconify.design/mdi:chevron-down.svg") no-repeat center;
+    background-color: currentColor;
+  }
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  details.accordion[open] & {
+    @apply border-b border-neutral-md;
+    
+    &::after {
+      @apply rotate-180;
+    }
+  }
+}
+
+/* The Animated Content Wrapper */
+.accordion-content {
+  @apply grid grid-rows-[0fr] transition-all duration-300 opacity-0;
+  overflow: hidden;
+
+  details.accordion[open] & {
+    @apply grid-rows-[1fr] opacity-100;
+  }
+
+  /* Inner wrapper for padding control and overflow safety */
+  > div {
+    overflow: hidden;
+    padding: var(--spacing-accordion);
+    @apply text-neutral-md text-sm leading-relaxed;
+  }
+}

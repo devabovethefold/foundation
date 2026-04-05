@@ -1,0 +1,31 @@
+@reference "tailwindcss";
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select {
+  @apply block w-full bg-(--background-color-neutral-lo) text-(--text-color-neutral-hi) border-(--border-color-neutral-md) shadow-sm transition-all;
+  padding: var(--spacing-input-y) var(--spacing-input-x);
+  border-radius: var(--radius-input);
+  border-width: var(--border-weight);
+
+  &:focus {
+    @apply outline-none ring-2 ring-(--border-color-base-hi) ring-offset-2 ring-offset-(--background-color-neutral-lo);
+  }
+
+  &::placeholder {
+    @apply text-(--text-color-neutral-lo) italic;
+  }
+}
+
+.form-label {
+  @apply mb-1.5 block text-xs font-bold uppercase tracking-wider text-neutral-hi;
+}
+
+.form-group {
+  @apply mb-4 space-y-1.5;
+}

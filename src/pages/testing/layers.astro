@@ -1,0 +1,142 @@
+---
+import Common from '../../layouts/Common.astro';
+---
+
+<Common title="Layer Elevation Playground">
+  <main class="content py-12">
+    <header class="mb-12">
+      <h1 class="text-h1">Layer Elevation Playground</h1>
+      <p class="text-xl text-neutral-md max-w-2xl">
+        Comparing our current <span class="font-bold">Static Token Mapping</span> vs. a <span class="font-bold text-base-hi">Dynamic Elevation Math</span> system using CSS Relative Color Syntax.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      
+      <!-- System 1: Static Tokens -->
+      <section class="space-y-6">
+        <h2 class="text-h3 border-b pb-2 border-neutral-lo">1. Current: Static Token Mapping</h2>
+        <p class="text-sm text-neutral-md italic">Tokens like <code class="bg-neutral-lo px-1">lo</code>, <code class="bg-neutral-lo px-1">md</code>, <code class="bg-neutral-lo px-1">hi</code> are mapped to specific constants in each theme CSS.</p>
+        
+        <div class="p-8 rounded-2xl bg-neutral-lo border border-neutral-lo space-y-6 shadow-sm">
+          <div class="text-xs uppercase tracking-widest text-neutral-lo font-boldOpacity opacity-60">Layer 0 (Section)</div>
+          
+          <div class="p-6 rounded-xl bg-neutral-md border border-neutral-lo space-y-4 shadow-sm">
+            <div class="text-xs uppercase tracking-widest text-neutral-lo font-boldOpacity opacity-60">Layer 1 (Tile)</div>
+            
+            <button class="px-6 py-3 rounded-lg bg-base-hi text-base-on font-bold shadow-md hover:brightness-110 transition-all cursor-pointer">
+              Layer 2 (Button)
+            </button>
+          </div>
+          
+          <div class="pt-4">
+            <button class="px-6 py-3 rounded-lg bg-base-hi text-base-on font-bold shadow-md hover:brightness-110 transition-all cursor-pointer">
+              Layer 2 on Layer 0
+            </button>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-lo leading-relaxed mt-4">
+          <span class="font-bold">Observation:</span> Notice how both buttons are identical. The button doesn't "know" it's sitting on a tile vs a body section.
+        </p>
+      </section>
+
+      <!-- System 2: Dynamic Elevation Math -->
+      <section class="space-y-6">
+        <h2 class="text-h3 border-b pb-2 border-base-hi">2. Proposed: Dynamic Elevation Math</h2>
+        <p class="text-sm text-neutral-md italic">A single <code class="bg-neutral-lo px-1">--e</code> variable shifts the color mathematically relative to the theme base.</p>
+        
+        <div class="dynamic-layer dynamic-layer-0 p-8 rounded-2xl border space-y-6 shadow-sm">
+          <div class="text-xs uppercase tracking-widest opacity-60 font-bold">Layer 0 (Section)</div>
+          
+          <div class="dynamic-layer dynamic-layer-1 p-6 rounded-xl border space-y-4 shadow-sm">
+            <div class="text-xs uppercase tracking-widest opacity-60 font-bold">Layer 1 (Tile)</div>
+            
+            <button class="dynamic-layer dynamic-layer-2 px-6 py-3 rounded-lg font-bold shadow-md hover:opacity-90 transition-all cursor-pointer">
+              Layer 2 (Button)
+            </button>
+          </div>
+          
+          <div class="pt-4">
+            <button class="dynamic-layer dynamic-layer-2 px-6 py-3 rounded-lg font-bold shadow-md hover:opacity-90 transition-all cursor-pointer">
+              Layer 2 on Layer 0
+            </button>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-lo leading-relaxed mt-4">
+          <span class="font-bold text-base-hi">Observation:</span> The buttons now have subtle depth difference. The button on the tile is slightly more elevated because its math is relative to the "implied lighting" of the parent.
+        </p>
+      </section>
+
+    </div>
+
+    <!-- Technical Legend -->
+    <footer class="mt-24 p-8 bg-neutral-lo rounded-xl border border-neutral-lo">
+      <h3 class="text-h4 mb-4">Under the Hood (RCS Math)</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono text-xs overflow-hidden">
+        <div class="p-4 bg-black/10 rounded-lg space-y-2">
+          <div class="text-blue-500 font-bold uppercase underline mb-2">// Dark Theme Logic</div>
+          <div>--e-step: 0.08; <span class="text-neutral-lo opacity-50">// Higher = Lighter</span></div>
+          <div class="break-words underline">background: oklch(from var(--base) calc(l + (var(--e) * var(--e-step))) c h);</div>
+        </div>
+        <div class="p-4 bg-black/10 rounded-lg space-y-2">
+          <div class="text-orange-500 font-bold uppercase underline mb-2">// Light Theme Logic</div>
+          <div>--e-step: -0.04; <span class="text-neutral-lo opacity-50">// Higher = Darker</span></div>
+          <div class="break-words underline">background: oklch(from var(--base) calc(l + (var(--e) * var(--e-step))) c h);</div>
+        </div>
+      </div>
+    </footer>
+  </main>
+</Common>
+
+<style>
+  /* ─── DYNAMIC ELEVATION ENGINE ─── */
+  
+  :root {
+    /* Step distance per elevation level (Luminance) */
+    --e-step: -0.04; /* Negative for Light Mode by default */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --e-step: 0.08; /* Positive for Dark Mode */
+    }
+  }
+
+  /* Support for our explicit .dark class */
+  :global(.dark) {
+    --e-step: 0.08;
+  }
+
+  .dynamic-layer {
+    transition: all 0.2s ease-in-out;
+    border-color: oklch(from var(--text-color-neutral-hi) l c h / 0.1);
+  }
+
+  /* Specific base for surfaces (using the extreme spectrum logic) */
+  .dynamic-layer-0, .dynamic-layer-1 {
+    background-color: oklch(
+       from var(--background-color-base-lo) 
+       calc(l + (var(--e, 0) * var(--e-step))) 
+       c h
+    );
+    color: var(--text-color-neutral-hi);
+  }
+
+  /* Buttons use the brand color as a base but still offset L */
+  .dynamic-layer-2 {
+    background-color: oklch(
+       from var(--base-500) 
+       calc(l + (var(--e, 0) * var(--e-step) * 2)) 
+       c h
+    );
+    color: var(--text-color-base-on);
+  }
+
+  .dynamic-layer-0 { --e: 0; }
+  .dynamic-layer-1 { --e: 1; }
+  .dynamic-layer-2 { --e: 2.5; }
+
+  /* Extra visuals */
+  .text-neutral-lo { color: var(--text-color-neutral-lo); }
+  .text-neutral-md { color: var(--text-color-neutral-md); }
+</style>

@@ -1,0 +1,42 @@
+@reference "tailwindcss";
+
+/**
+  * Card Component
+  * -------------------------------------------------------------------
+  * Informational, Narrative, Container.
+  * Best for content summaries, blog posts, or detailed data slices.
+  * -------------------------------------------------------------------
+  */
+@utility card {
+  @apply surface shadow-sm transition-shadow duration-300;
+  @apply flex flex-col;
+  border-radius: var(--radius-card);
+  border-width: var(--border-weight);
+  overflow: hidden;
+
+  &.card-padded {
+    padding: var(--spacing-8);
+  }
+
+  &.card-hover {
+    @apply hover:shadow-lg;
+  }
+}
+
+@utility card-header {
+  @apply flex items-center justify-between border-b border-neutral-lo;
+  padding: calc(var(--spacing-card) / 2) var(--spacing-card);
+}
+
+@utility card-body {
+  padding: var(--spacing-card);
+}
+
+@utility card-footer {
+  @apply border-t border-neutral-lo;
+  padding: calc(var(--spacing-card) / 2) var(--spacing-card);
+}
+
+@utility card-padded {
+  padding: var(--spacing-card);
+}

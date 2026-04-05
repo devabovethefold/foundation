@@ -2,9 +2,10 @@
 
 button,
 .btn {
-  @apply bg-base-hi text-neutral-on border-base-hi inline-flex cursor-pointer items-center justify-center border leading-none transition-colors;
-  /* @apply hover:-brightness-[110%] active:brightness-[80%]; */
+  @apply bg-base-hi text-neutral-on border-base-hi inline-flex cursor-pointer items-center justify-center transition-all;
   @apply focus:outline-none;
+  border-radius: var(--radius-btn);
+  border-width: var(--border-weight);
 
   &:not([class*='p-']) {
     @apply justify-between px-6 py-3;
@@ -14,7 +15,7 @@ button,
     @apply text-neutral-md border-neutral-lo bg-neutral-md;
   }
 
-  @.btn-transparent {
+  &.btn-transparent {
     @apply border-transparent bg-transparent;
   }
 }

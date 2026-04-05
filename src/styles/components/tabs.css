@@ -1,0 +1,29 @@
+@reference "tailwindcss";
+
+/**
+  * Tabs Component
+  * -------------------------------------------------------------------
+  * Interactive content switcher using the Pill style.
+  * Relies on Alpine.js for state management and ARIA attributes.
+  * -------------------------------------------------------------------
+  */
+@utility tabs-list {
+  @apply inline-flex items-center bg-neutral-lo/50 p-1 border gap-1;
+  border-radius: var(--radius-tab);
+  border-width: var(--border-weight);
+}
+
+@utility tab-trigger {
+  @apply px-4 py-2 text-sm font-medium transition-all cursor-pointer;
+  @apply text-neutral-md hover:text-neutral-hi;
+  border-radius: calc(var(--radius-tab) - 2px);
+
+  &[aria-selected="true"] {
+    @apply bg-base-hi text-base-on shadow-sm;
+  }
+}
+
+@utility tab-content {
+  @apply py-6 outline-none;
+  /* Hide by default, shown by Alpine's x-show or manual logic */
+}

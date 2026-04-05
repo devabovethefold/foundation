@@ -1,0 +1,74 @@
+/* --- Component Design Tokens --- */
+:root {
+  --radius-btn: var(--radius-lg);
+  --radius-tile: var(--radius-md);
+  --radius-card: var(--radius-xl);
+  --radius-tab: var(--radius-md);
+  --radius-accordion: var(--radius-md);
+  --radius-input: var(--radius-md);
+  --radius-badge: var(--radius-full);
+  --border-weight: var(--border-width-thin);
+  
+  /* Semantic Spacing Mappings */
+  --spacing-tile: var(--spacing-4);
+  --spacing-card: var(--spacing-8);
+  --spacing-accordion: var(--spacing-4);
+  --spacing-input-x: var(--spacing-3);
+  --spacing-input-y: var(--spacing-2);
+
+  /* Global Basis Defaults (Inherited from tokens.css/spacing.css) */
+}
+
+/* --- Granular Style Controls --- */
+
+/* 1. Spacing Parameters */
+[data-style~='spacing-soft']  { --spacing-basis: 0.3rem; }  /* 20% looser */
+[data-style~='spacing-sharp'] { --spacing-basis: 0.2rem; }  /* 20% tighter */
+[data-style~='spacing-retro'] { --spacing-basis: 0.25rem; } /* Rigid 4px */
+
+/* 2. Radius Parameters */
+[data-style~='radius-soft']  { --radius-multiplier: 2; --radius-btn: var(--radius-full); }
+[data-style~='radius-sharp'] { --radius-multiplier: 0; }
+[data-style~='radius-retro'] { --radius-multiplier: 0; --radius-badge: 0; }
+
+/* 3. Shadow Parameters */
+[data-style~='shadow-soft']  { --shadow-intensity: 1.2; }
+[data-style~='shadow-sharp'] { --shadow-intensity: 0; }
+[data-style~='shadow-retro'] { 
+  --shadow-intensity: 0; 
+  --shadow-offset-x: 4px; 
+  --shadow-offset-y: 4px; 
+}
+
+/* 4. Border Parameters */
+[data-style~='border-soft']  { --border-weight: 1px; }
+[data-style~='border-sharp'] { --border-weight: var(--border-width-thick); }
+[data-style~='border-retro'] { --border-weight: var(--border-width-heavy); }
+
+
+/* --- Legacy Compatibility (Bundle Selectors) --- */
+/* These remain to support old data-style="soft" usage as a single-parameter list */
+[data-style='soft'], [data-style~='soft'] {
+  --spacing-basis: 0.3rem;
+  --radius-multiplier: 2;
+  --shadow-intensity: 1.2;
+  --radius-btn: var(--radius-full);
+  --border-weight: 1px;
+}
+
+[data-style='sharp'], [data-style~='sharp'] {
+  --spacing-basis: 0.2rem;
+  --radius-multiplier: 0;
+  --shadow-intensity: 0;
+  --border-weight: var(--border-width-thick);
+}
+
+[data-style='retro'], [data-style~='retro'] {
+  --spacing-basis: 0.25rem;
+  --radius-multiplier: 0;
+  --shadow-intensity: 0;
+  --shadow-offset-x: 4px;
+  --shadow-offset-y: 4px;
+  --radius-badge: 0;
+  --border-weight: var(--border-width-heavy);
+}

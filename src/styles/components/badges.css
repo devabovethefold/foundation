@@ -1,0 +1,32 @@
+@reference "tailwindcss";
+
+@utility badge {
+  @apply inline-flex items-center justify-center font-medium leading-none;
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--text-xs);
+  border-radius: var(--radius-badge);
+  border-width: var(--border-weight);
+
+  /* Default */
+  @apply bg-(--background-color-neutral-lo) text-(--text-color-neutral-hi) border-(--border-color-neutral-md);
+
+  &.badge-primary {
+    @apply bg-(--background-color-base-hi) text-(--text-color-base-on) border-(--border-color-base-hi);
+  }
+
+  &.badge-success {
+    @apply bg-(--background-color-success-hi) text-(--text-color-success-on) border-(--border-color-success-hi);
+  }
+
+  &.badge-warning {
+    @apply bg-(--background-color-warning-hi) text-(--text-color-warning-on) border-(--border-color-warning-hi);
+  }
+
+  &.badge-error {
+    @apply bg-(--background-color-error-hi) text-(--text-color-error-on) border-(--border-color-error-hi);
+  }
+
+  &.badge-outline {
+    @apply bg-transparent text-(--text-color-neutral-md);
+  }
+}

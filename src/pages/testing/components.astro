@@ -1,0 +1,301 @@
+---
+import Layout from '@layouts/Common.astro';
+import { Icon } from 'astro-icon/components';
+---
+
+<Layout>
+  <header 
+    class="content pt-20 pb-10 space-y-8" 
+    x-data="{ 
+       spacing: '', 
+       radius: '', 
+       shadow: '', 
+       border: '',
+       get combinedStyle() {
+         return [this.spacing, this.radius, this.shadow, this.border].filter(Boolean).join(' ') || 'standard';
+       },
+       setPreset(p) {
+         if (p === 'standard') {
+           this.spacing = ''; this.radius = ''; this.shadow = ''; this.border = '';
+         } else {
+           this.spacing = 'spacing-' + p;
+           this.radius = 'radius-' + p;
+           this.shadow = 'shadow-' + p;
+           this.border = 'border-' + p;
+         }
+       }
+    }" 
+    x-init="$watch('combinedStyle', val => document.documentElement.setAttribute('data-style', val))"
+  >
+    <div class="flex items-end justify-between border-b pb-6">
+      <div>
+         <h1 class="text-h1">Component Showcase</h1>
+         <p class="text-neutral-md">Granular Personality Engine Testing</p>
+      </div>
+      <div class="flex flex-col items-end gap-4">
+        <!-- Global Presets -->
+        <div class="flex items-center gap-3">
+          <span class="text-[10px] font-bold uppercase tracking-widest opacity-50">Global Presets</span>
+          <div class="flex gap-1 bg-neutral-lo p-1 rounded-lg border">
+            <button @click="setPreset('standard')" :class="!spacing && !radius ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Standard</button>
+            <button @click="setPreset('soft')" :class="spacing === 'spacing-soft' && radius === 'radius-soft' ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Soft</button>
+            <button @click="setPreset('sharp')" :class="spacing === 'spacing-sharp' && radius === 'radius-sharp' ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Sharp</button>
+            <button @click="setPreset('retro')" :class="spacing === 'spacing-retro' && radius === 'radius-retro' ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Retro</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Granular Controls -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Spacing -->
+      <div class="space-y-2">
+        <label class="text-[10px] font-bold uppercase tracking-widest opacity-50">Spacing</label>
+        <div class="flex flex-wrap gap-1">
+          <button @click="spacing = ''" :class="spacing === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Standard</button>
+          <button @click="spacing = 'spacing-soft'" :class="spacing === 'spacing-soft' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Soft</button>
+          <button @click="spacing = 'spacing-sharp'" :class="spacing === 'spacing-sharp' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Sharp</button>
+          <button @click="spacing = 'spacing-retro'" :class="spacing === 'spacing-retro' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Retro</button>
+        </div>
+      </div>
+
+      <!-- Radius -->
+      <div class="space-y-2">
+        <label class="text-[10px] font-bold uppercase tracking-widest opacity-50">Radius</label>
+        <div class="flex flex-wrap gap-1">
+          <button @click="radius = ''" :class="radius === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Standard</button>
+          <button @click="radius = 'radius-soft'" :class="radius === 'radius-soft' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Soft</button>
+          <button @click="radius = 'radius-sharp'" :class="radius === 'radius-sharp' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Sharp</button>
+          <button @click="radius = 'radius-retro'" :class="radius === 'radius-retro' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Retro</button>
+        </div>
+      </div>
+
+      <!-- Shadows -->
+      <div class="space-y-2">
+        <label class="text-[10px] font-bold uppercase tracking-widest opacity-50">Shadows</label>
+        <div class="flex flex-wrap gap-1">
+          <button @click="shadow = ''" :class="shadow === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Standard</button>
+          <button @click="shadow = 'shadow-soft'" :class="shadow === 'shadow-soft' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Soft</button>
+          <button @click="shadow = 'shadow-sharp'" :class="shadow === 'shadow-sharp' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Sharp</button>
+          <button @click="shadow = 'shadow-retro'" :class="shadow === 'shadow-retro' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Retro</button>
+        </div>
+      </div>
+
+      <!-- Borders -->
+      <div class="space-y-2">
+        <label class="text-[10px] font-bold uppercase tracking-widest opacity-50">Borders</label>
+        <div class="flex flex-wrap gap-1">
+          <button @click="border = ''" :class="border === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Standard</button>
+          <button @click="border = 'border-soft'" :class="border === 'border-soft' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Soft</button>
+          <button @click="border = 'border-sharp'" :class="border === 'border-sharp' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Sharp</button>
+          <button @click="border = 'border-retro'" :class="border === 'border-retro' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Retro</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. Tiles vs. Cards -->
+  <section class="content py-10 space-y-12">
+    <header class="col-start-grid col-span-12 mb-8 space-y-4">
+      <h2 class="text-h3 border-b pb-2">1. Lorem Ipsum Tiles</h2>
+      <p class="text-sm text-neutral-md max-w-3xl">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+    </header>
+
+    <!-- Tiles Grid -->
+    <div class="col-start-grid col-span-12 mb-4">
+      <h3 class="text-sm font-bold uppercase tracking-widest text-neutral-hi opacity-50">Lorem Ipsum ( Atomic )</h3>
+    </div>
+    <div class="tile tile-square col-start-grid sixth">
+      <Icon name="mdi:star" class="size-6 text-base-hi" />
+      <span class="text-xs font-bold">Lorem</span>
+    </div>
+    <div class="tile tile-square sixth">
+      <Icon name="mdi:lightning-bolt" class="size-6 text-base-hi" />
+      <span class="text-xs font-bold">Ipsum</span>
+    </div>
+    <div class="tile tile-square sixth">
+      <Icon name="mdi:shield-check" class="size-6 text-base-hi" />
+      <span class="text-xs font-bold">Dolor</span>
+    </div>
+    <div class="tile tile-square sixth">
+       <Icon name="mdi:menu" class="size-6 text-base-hi" />
+       <span class="text-xs font-bold">Sit</span>
+    </div>
+    <div class="tile tile-square sixth">
+       <Icon name="mdi:star" class="size-6 text-base-hi" />
+       <span class="text-xs font-bold">Amet</span>
+    </div>
+    <div class="tile tile-square sixth">
+       <Icon name="mdi:star" class="size-6 text-base-hi" />
+       <span class="text-xs font-bold">Adipiscing</span>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="col-start-grid col-span-12 mt-12 mb-4">
+      <h3 class="text-sm font-bold uppercase tracking-widest text-neutral-hi opacity-50">Lorem Ipsum ( Narrative )</h3>
+    </div>
+    <div class="card card-hover col-start-grid half">
+      <div class="card-header">
+         <span class="text-xs font-bold uppercase opacity-50">Lorem</span>
+         <Icon name="mdi:star" class="size-4 text-base-hi" />
+      </div>
+      <div class="card-body space-y-4">
+         <h4 class="text-xl font-bold">Consectetur Adipiscing</h4>
+         <p class="text-sm text-neutral-md">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+      <div class="card-footer">
+         <button class="btn btn-ghost text-xs">Dolor Sit</button>
+      </div>
+    </div>
+
+    <div class="card card-padded half space-y-4">
+       <h4 class="text-xl font-bold">Sed do Eiusmod</h4>
+       <p class="text-sm text-neutral-md">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+       <div class="flex gap-2">
+          <span class="badge badge-primary">Lorem</span>
+          <span class="badge">Ipsum</span>
+       </div>
+    </div>
+  </section>
+
+  <!-- 2. Tabs -->
+  <section class="content py-10 space-y-12">
+    <header class="col-start-grid col-span-12 mb-4 space-y-4">
+      <h2 class="text-h3 border-b pb-2">2. Lorem Ipsum Tabs</h2>
+      <p class="text-sm text-neutral-md max-w-3xl">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </header>
+
+    <div 
+      class="col-start-grid half" 
+      x-data="{ 
+        activeTab: 'lorem',
+        focusNext() {
+          const tabs = ['lorem', 'ipsum', 'dolor'];
+          const idx = tabs.indexOf(this.activeTab);
+          this.activeTab = tabs[(idx + 1) % tabs.length];
+          this.$nextTick(() => this.$refs[this.activeTab].focus());
+        },
+        focusPrev() {
+          const tabs = ['lorem', 'ipsum', 'dolor'];
+          const idx = tabs.indexOf(this.activeTab);
+          this.activeTab = tabs[(idx - 1 + tabs.length) % tabs.length];
+          this.$nextTick(() => this.$refs[this.activeTab].focus());
+        }
+      }"
+    >
+      <div role="tablist" aria-label="Lorem Ipsum Tabs" class="tabs-list" @keydown.right.prevent="focusNext()" @keydown.left.prevent="focusPrev()">
+        <button 
+          role="tab" 
+          id="tab-lorem"
+          x-ref="lorem"
+          :aria-selected="activeTab === 'lorem'" 
+          :tabindex="activeTab === 'lorem' ? 0 : -1"
+          aria-controls="panel-lorem"
+          class="tab-trigger" 
+          @click="activeTab = 'lorem'"
+        >Lorem</button>
+        <button 
+          role="tab" 
+          id="tab-ipsum"
+          x-ref="ipsum"
+          :aria-selected="activeTab === 'ipsum'" 
+          :tabindex="activeTab === 'ipsum' ? 0 : -1"
+          aria-controls="panel-ipsum"
+          class="tab-trigger" 
+          @click="activeTab = 'ipsum'"
+        >Ipsum</button>
+        <button 
+          role="tab" 
+          id="tab-dolor"
+          x-ref="dolor"
+          :aria-selected="activeTab === 'dolor'" 
+          :tabindex="activeTab === 'dolor' ? 0 : -1"
+          aria-controls="panel-dolor"
+          class="tab-trigger" 
+          @click="activeTab = 'dolor'"
+        >Dolor</button>
+      </div>
+
+      <div id="panel-lorem" role="tabpanel" aria-labelledby="tab-lorem" x-show="activeTab === 'lorem'" class="tab-content animate-in fade-in duration-300">
+        <p class="text-sm">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+      </div>
+      <div id="panel-ipsum" role="tabpanel" aria-labelledby="tab-ipsum" x-show="activeTab === 'ipsum'" class="tab-content animate-in fade-in duration-300" style="display: none;">
+        <p class="text-sm">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+      </div>
+      <div id="panel-dolor" role="tabpanel" aria-labelledby="tab-dolor" x-show="activeTab === 'dolor'" class="tab-content animate-in fade-in duration-300" style="display: none;">
+        <p class="text-sm">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Accordions -->
+  <section class="content py-10 space-y-12">
+    <header class="col-start-grid col-span-12 mb-4 space-y-4">
+      <h2 class="text-h3 border-b pb-2">3. Lorem Ipsum Accordions</h2>
+      <p class="text-sm text-neutral-md max-w-3xl">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+    </header>
+
+    <div class="col-start-grid half space-y-4">
+      <details class="accordion" open>
+        <summary>Lorem Ipsum Dolor?</summary>
+        <div class="accordion-content">
+          <div>
+            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+          </div>
+        </div>
+      </details>
+
+      <details class="accordion tracking-tight">
+        <summary>Consectetur Adipiscing?</summary>
+        <div class="accordion-content">
+          <div>
+            Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus.
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- 4. Badges -->
+  <section class="content py-10 space-y-8">
+    <header class="col-start-grid col-span-12 mb-4">
+      <h2 class="text-h3 border-b pb-2">4. Semantic Badges</h2>
+    </header>
+    <div class="col-start-grid col-span-12 flex flex-wrap gap-4">
+      <span class="badge">Default</span>
+      <span class="badge badge-primary">Primary</span>
+      <span class="badge badge-success">Success</span>
+      <span class="badge badge-warning">Warning</span>
+      <span class="badge badge-error">Error</span>
+      <span class="badge badge-outline">Outline</span>
+    </div>
+  </section>
+
+  <!-- 5. Form Controls -->
+  <section class="content py-10 pb-20 space-y-8">
+    <header class="col-start-grid col-span-12 mb-4">
+      <h2 class="text-h3 border-b pb-2">5. Form Controls</h2>
+    </header>
+    <div class="col-start-grid half space-y-6">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" placeholder="John Doe" />
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" placeholder="john@example.com" />
+        <p class="text-[10px] opacity-60">We'll never share your email.</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea rows="4" placeholder="Your message here..."></textarea>
+      </div>
+
+      <button class="btn w-full">Submit Form</button>
+    </div>
+  </section>
+</Layout>

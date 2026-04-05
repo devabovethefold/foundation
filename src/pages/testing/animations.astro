@@ -1,0 +1,25 @@
+---
+import Layout from '@layouts/Common.astro'
+---
+
+<Layout>
+  <h1>Tailwind v4 Animation DSL Demo</h1>
+
+  <section class="stagger flex flex-wrap gap-4" style="--stagger: 150ms;">
+    <div class="box reveal cover-100 ease-smooth stagger-item start-0 duration-700"></div>
+    <div class="box fade stagger-item duration-500"></div>
+    <div class="box slide slide-up ease-snappy stagger-item duration-600"></div>
+    <div class="box reveal cover-90 ease-smooth stagger-item start-10 duration-800"></div>
+    <div class="box slide slide-left stagger-item duration-700 ease-linear"></div>
+    <div class="box fade stagger-item duration-600"></div>
+    <div class="box slide slide-down ease-snappy stagger-item duration-500"></div>
+    <div class="box reveal cover-100 ease-smooth stagger-item start-0 duration-750"></div>
+  </section>
+
+  <!-- Debug Example -->
+  <section class="stagger debug-outline flex flex-wrap gap-4" style="--stagger: 200ms;">
+    <div class="box reveal stagger-item debug-timeline duration-600"></div>
+    <div class="box fade stagger-item debug-timeline duration-500"></div>
+    <div class="box slide slide-right stagger-item debug-timeline duration-700"></div>
+  </section>
+</Layout>

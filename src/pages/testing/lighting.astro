@@ -1,0 +1,73 @@
+---
+import Layout from '@layouts/Common.astro';
+import Surface from '@components/ui/Surface.astro';
+import { Icon } from 'astro-icon/components';
+---
+
+<Layout>
+  <div class="content py-20 space-y-20">
+    
+    <header class="space-y-4">
+      <h1 class="text-h1">Dynamic Lighting System</h1>
+      <p class="max-w-2xl text-lg text-neutral-md">
+        This page demonstrates the <strong>Inheritance-based Lighting Engine</strong>. 
+        Each box below uses the same <code>.surface</code> class. 
+        Notice how they automatically get lighter as they nest, without any specific "level" classes.
+      </p>
+    </header>
+
+    <!-- 1. The Nesting Test -->
+    <section class="space-y-8">
+      <h2 class="text-h3 border-b pb-2">1. Visual Stacking (Infinite Nesting)</h2>
+      
+      <Surface class="rounded-3xl p-12 border shadow-sm">
+        <span class="text-xs font-bold uppercase opacity-50">Level 1</span>
+        
+        <Surface class="mt-8 rounded-2xl p-10 border shadow-md">
+           <span class="text-xs font-bold uppercase opacity-50">Level 2</span>
+           
+           <Surface class="mt-8 rounded-xl p-8 border shadow-lg">
+             <span class="text-xs font-bold uppercase opacity-50">Level 3</span>
+             
+             <Surface class="mt-8 rounded-lg p-6 border shadow-xl">
+               <span class="text-xs font-bold uppercase opacity-50">Level 4</span>
+               <p class="mt-2 text-sm">I have inherited and transformed the surface variable 4 times, automatically increasing or decreasing contrast relative to each parent.</p>
+             </Surface>
+           </Surface>
+        </Surface>
+      </Surface>
+    </section>
+
+    <!-- 2. Mixing with Content -->
+    <section class="space-y-8">
+      <h2 class="text-h3 border-b pb-2">2. Surface Grids</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <Surface class="rounded-xl p-6 border text-center space-y-4 shadow-sm">
+          <Icon name="mdi:star" class="size-8 mx-auto text-base-hi" />
+          <h3 class="font-bold">Feature One</h3>
+          <p class="text-sm opacity-80">This card inherits the base page background.</p>
+        </Surface>
+        
+        <Surface class="rounded-xl p-6 border text-center space-y-4 shadow-sm">
+          <Icon name="mdi:lightning-bolt" class="size-8 mx-auto text-base-hi" />
+          <h3 class="font-bold">Feature Two</h3>
+          <p class="text-sm opacity-80">The border and background are mathematically derived.</p>
+        </Surface>
+        
+        <Surface class="rounded-xl p-6 border text-center space-y-4 shadow-sm">
+          <Icon name="mdi:shield-check" class="size-8 mx-auto text-base-hi" />
+          <h3 class="font-bold">Feature Three</h3>
+          <p class="text-sm opacity-80">Works seamlessly in both Light and Dark mode.</p>
+        </Surface>
+      </div>
+    </section>
+
+  </div>
+</Layout>
+
+<style>
+  /* Extra styling for the demo */
+  :global(.surface) {
+    min-height: 50px;
+  }
+</style>

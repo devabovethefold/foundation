@@ -1,4 +1,6 @@
 @theme {
+  --spacing-basis: 0.25rem;
+  --spacing: var(--spacing-basis);
   --spacing-content-block: clamp(2rem, -1rem + 7.5vw, 5rem);
 
   /* Margin tracks at the very edge of the screen */

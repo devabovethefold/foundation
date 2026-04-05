@@ -7,7 +7,7 @@ import { Icon } from 'astro-icon/components'
     <a href="/">Header</a>
     <ul class="hidden basis-3xs items-center justify-between gap-4 md:flex">
       <li><a href="/">Home</a></li>
-      <li><a href="/about">About</a></li>
+      <li><a href="/testing/components">Components</a></li>
       <li><a href="/contact" class="btn">Contact</a></li>
     </ul>
     <div class="flex items-center justify-between gap-2">
@@ -24,8 +24,10 @@ import { Icon } from 'astro-icon/components'
         x-data="$store.drawer"
         @click="toggle()"
         aria-label="Open mobile navigation menu"
-        class="btn-ghost size-10 p-0 md:hidden"><Icon name="mdi:menu" /></button
+        class="btn-ghost size-10 p-0 md:hidden!"
       >
+        <Icon name="mdi:menu" />
+      </button>
     </div>
   </nav>
 </header>

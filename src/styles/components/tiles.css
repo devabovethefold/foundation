@@ -1,0 +1,21 @@
+@reference "tailwindcss";
+
+/**
+  * Tile Component
+  * -------------------------------------------------------------------
+  * Atomic, Functional, Navigational.
+  * Best for grids of actions, status indicators, or category triggers.
+  * -------------------------------------------------------------------
+  */
+@utility tile {
+  @apply surface shadow-sm flex flex-col items-center justify-center transition-all duration-300;
+  @apply hover:shadow-md hover:-translate-y-1 hover:bg-neutral-lo/80 hover:border-base-hi;
+  border-radius: var(--radius-tile);
+  border-width: var(--border-weight);
+  padding: var(--spacing-tile);
+  cursor: pointer;
+
+  &.tile-square {
+    @apply aspect-square;
+  }
+}
