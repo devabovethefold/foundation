@@ -26,9 +26,9 @@
   /* --- Shadow Scale --- */
   /* Using multipliers for blur/spread and offsets for 'Retro' pop effects */
   --shadow-none: 0 0 #0000;
-  --shadow-sm: var(--shadow-offset-x) var(--shadow-offset-y) calc(2px * var(--shadow-intensity)) 0 var(--box-shadow-color-base-lo);
-  --shadow-md: var(--shadow-offset-x) var(--shadow-offset-y) calc(6px * var(--shadow-intensity)) -1px var(--box-shadow-color-base-lo),
+  --shadow-sm: var(--shadow-offset-x) var(--shadow-offset-y) calc(3px * var(--shadow-intensity)) 0 var(--box-shadow-color-base-lo);
+  --shadow-md: var(--shadow-offset-x) var(--shadow-offset-y) calc(10px * var(--shadow-intensity)) -1px var(--box-shadow-color-base-lo),
     var(--shadow-offset-x) var(--shadow-offset-y) calc(4px * var(--shadow-intensity)) -2px var(--box-shadow-color-base-lo);
-  --shadow-lg: var(--shadow-offset-x) var(--shadow-offset-y) calc(15px * var(--shadow-intensity)) -3px var(--box-shadow-color-base-lo),
-    var(--shadow-offset-x) var(--shadow-offset-y) calc(6px * var(--shadow-intensity)) -4px var(--box-shadow-color-base-lo);
+  --shadow-lg: var(--shadow-offset-x) var(--shadow-offset-y) calc(25px * var(--shadow-intensity)) -3px var(--box-shadow-color-base-lo),
+    var(--shadow-offset-x) var(--shadow-offset-y) calc(10px * var(--shadow-intensity)) -4px var(--box-shadow-color-base-lo);
 }

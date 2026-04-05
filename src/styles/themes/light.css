@@ -99,9 +99,9 @@
 
   /* --- Shadow --- */
   /* Alpha-based translucent colors using OKLCH relative transformation (Alphredo-style) */
-  --box-shadow-color-base-lo: oklch(from var(--base-900) l c h / 0.04);
-  --box-shadow-color-base-md: oklch(from var(--base-900) l c h / 0.08);
-  --box-shadow-color-base-hi: oklch(from var(--base-900) l c h / 0.12);
+  --box-shadow-color-base-lo: oklch(from var(--base-900) l c h / 0.15);
+  --box-shadow-color-base-md: oklch(from var(--base-900) l c h / 0.2);
+  --box-shadow-color-base-hi: oklch(from var(--base-900) l c h / 0.25);
 
   --box-shadow-color-accent-lo: oklch(from var(--accent-900) l c h / 0.04);
   --box-shadow-color-accent-md: oklch(from var(--accent-900) l c h / 0.08);

@@ -2,7 +2,7 @@
 
 @utility badge {
   @apply inline-flex items-center justify-center font-medium leading-none;
-  padding: var(--spacing-1) var(--spacing-3);
+  padding: var(--spacing-badge-y) var(--spacing-badge-x);
   font-size: var(--text-xs);
   border-radius: var(--radius-badge);
   border-width: var(--border-weight);
