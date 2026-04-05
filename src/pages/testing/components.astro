@@ -17,11 +17,21 @@ import { Icon } from 'astro-icon/components';
        setPreset(p) {
          if (p === 'standard') {
            this.spacing = ''; this.radius = ''; this.shadow = ''; this.border = '';
-         } else {
-           this.spacing = 'spacing-' + p;
-           this.radius = 'radius-' + p;
-           this.shadow = 'shadow-' + p;
-           this.border = 'border-' + p;
+         } else if (p === 'soft') {
+           this.spacing = 'spacing-large';
+           this.radius = 'radius-large';
+           this.shadow = 'shadow-large';
+           this.border = 'border-thin';
+         } else if (p === 'sharp') {
+           this.spacing = 'spacing-small';
+           this.radius = 'radius-none';
+           this.shadow = 'shadow-none';
+           this.border = 'border-thick';
+         } else if (p === 'retro') {
+           this.spacing = 'spacing-medium';
+           this.radius = 'radius-none';
+           this.shadow = 'shadow-retro';
+           this.border = 'border-heavy';
          }
        }
     }" 
@@ -37,10 +47,10 @@ import { Icon } from 'astro-icon/components';
         <div class="flex items-center gap-3">
           <span class="text-[10px] font-bold uppercase tracking-widest opacity-50">Global Presets</span>
           <div class="flex gap-1 bg-neutral-lo p-1 rounded-lg border">
-            <button @click="setPreset('standard')" :class="!spacing && !radius ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Standard</button>
-            <button @click="setPreset('soft')" :class="spacing === 'spacing-soft' && radius === 'radius-soft' ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Soft</button>
-            <button @click="setPreset('sharp')" :class="spacing === 'spacing-sharp' && radius === 'radius-sharp' ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Sharp</button>
-            <button @click="setPreset('retro')" :class="spacing === 'spacing-retro' && radius === 'radius-retro' ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Retro</button>
+            <button @click="setPreset('standard')" :class="!spacing && !radius && !shadow && !border ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Standard</button>
+            <button @click="setPreset('soft')" :class="spacing === 'spacing-large' && radius === 'radius-large' ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Soft</button>
+            <button @click="setPreset('sharp')" :class="spacing === 'spacing-small' && radius === 'radius-none' ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Sharp</button>
+            <button @click="setPreset('retro')" :class="border === 'border-heavy' && shadow === 'shadow-retro' ? 'bg-base-hi text-base-on shadow-sm' : ''" class="px-3 py-1 text-[10px] font-bold rounded transition-all">Retro</button>
           </div>
         </div>
       </div>
@@ -52,10 +62,10 @@ import { Icon } from 'astro-icon/components';
       <div class="space-y-2">
         <label class="text-[10px] font-bold uppercase tracking-widest opacity-50">Spacing</label>
         <div class="flex flex-wrap gap-1">
-          <button @click="spacing = ''" :class="spacing === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Standard</button>
-          <button @click="spacing = 'spacing-soft'" :class="spacing === 'spacing-soft' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Soft</button>
-          <button @click="spacing = 'spacing-sharp'" :class="spacing === 'spacing-sharp' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Sharp</button>
-          <button @click="spacing = 'spacing-retro'" :class="spacing === 'spacing-retro' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Retro</button>
+          <button @click="spacing = 'spacing-small'" :class="spacing === 'spacing-small' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Small</button>
+          <button @click="spacing = ''" :class="spacing === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Medium</button>
+          <button @click="spacing = 'spacing-large'" :class="spacing === 'spacing-large' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Large</button>
+          <button @click="spacing = 'spacing-xl'" :class="spacing === 'spacing-xl' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">XL</button>
         </div>
       </div>
 
@@ -63,10 +73,11 @@ import { Icon } from 'astro-icon/components';
       <div class="space-y-2">
         <label class="text-[10px] font-bold uppercase tracking-widest opacity-50">Radius</label>
         <div class="flex flex-wrap gap-1">
-          <button @click="radius = ''" :class="radius === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Standard</button>
-          <button @click="radius = 'radius-soft'" :class="radius === 'radius-soft' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Soft</button>
-          <button @click="radius = 'radius-sharp'" :class="radius === 'radius-sharp' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Sharp</button>
-          <button @click="radius = 'radius-retro'" :class="radius === 'radius-retro' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Retro</button>
+          <button @click="radius = 'radius-none'" :class="radius === 'radius-none' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">None</button>
+          <button @click="radius = 'radius-small'" :class="radius === 'radius-small' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Small</button>
+          <button @click="radius = ''" :class="radius === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Medium</button>
+          <button @click="radius = 'radius-large'" :class="radius === 'radius-large' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Large</button>
+          <button @click="radius = 'radius-full'" :class="radius === 'radius-full' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Full</button>
         </div>
       </div>
 
@@ -74,10 +85,11 @@ import { Icon } from 'astro-icon/components';
       <div class="space-y-2">
         <label class="text-[10px] font-bold uppercase tracking-widest opacity-50">Shadows</label>
         <div class="flex flex-wrap gap-1">
-          <button @click="shadow = ''" :class="shadow === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Standard</button>
-          <button @click="shadow = 'shadow-soft'" :class="shadow === 'shadow-soft' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Soft</button>
-          <button @click="shadow = 'shadow-sharp'" :class="shadow === 'shadow-sharp' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Sharp</button>
-          <button @click="shadow = 'shadow-retro'" :class="shadow === 'shadow-retro' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Retro</button>
+          <button @click="shadow = 'shadow-none'" :class="shadow === 'shadow-none' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">None</button>
+          <button @click="shadow = 'shadow-small'" :class="shadow === 'shadow-small' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Small</button>
+          <button @click="shadow = ''" :class="shadow === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Medium</button>
+          <button @click="shadow = 'shadow-large'" :class="shadow === 'shadow-large' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Large</button>
+          <button @click="shadow = 'shadow-retro'" :class="shadow === 'shadow-retro' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Retro</button>
         </div>
       </div>
 
@@ -85,10 +97,11 @@ import { Icon } from 'astro-icon/components';
       <div class="space-y-2">
         <label class="text-[10px] font-bold uppercase tracking-widest opacity-50">Borders</label>
         <div class="flex flex-wrap gap-1">
-          <button @click="border = ''" :class="border === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Standard</button>
-          <button @click="border = 'border-soft'" :class="border === 'border-soft' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Soft</button>
-          <button @click="border = 'border-sharp'" :class="border === 'border-sharp' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Sharp</button>
-          <button @click="border = 'border-retro'" :class="border === 'border-retro' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-2 py-1 text-[10px] border rounded transition-all">Retro</button>
+          <button @click="border = 'border-hairline'" :class="border === 'border-hairline' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Hairline</button>
+          <button @click="border = 'border-thin'" :class="border === 'border-thin' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Thin</button>
+          <button @click="border = ''" :class="border === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Medium</button>
+          <button @click="border = 'border-thick'" :class="border === 'border-thick' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Thick</button>
+          <button @click="border = 'border-heavy'" :class="border === 'border-heavy' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Heavy</button>
         </div>
       </div>
     </div>

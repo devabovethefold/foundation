@@ -22,28 +22,34 @@
 /* --- Granular Style Controls --- */
 
 /* 1. Spacing Parameters */
-[data-style~='spacing-soft']  { --spacing-basis: 0.3rem; }  /* 20% looser */
-[data-style~='spacing-sharp'] { --spacing-basis: 0.2rem; }  /* 20% tighter */
-[data-style~='spacing-retro'] { --spacing-basis: 0.25rem; } /* Rigid 4px */
+[data-style~='spacing-small']  { --spacing-basis: 0.2rem; }   /* 20% tighter */
+[data-style~='spacing-medium'] { --spacing-basis: 0.25rem; }  /* Standard 4px basis */
+[data-style~='spacing-large']  { --spacing-basis: 0.3rem; }   /* 20% looser */
+[data-style~='spacing-xl']     { --spacing-basis: 0.4rem; }   /* 60% looser */
 
 /* 2. Radius Parameters */
-[data-style~='radius-soft']  { --radius-multiplier: 2; --radius-btn: var(--radius-full); }
-[data-style~='radius-sharp'] { --radius-multiplier: 0; }
-[data-style~='radius-retro'] { --radius-multiplier: 0; --radius-badge: 0; }
+[data-style~='radius-none']   { --radius-multiplier: 0; }
+[data-style~='radius-small']  { --radius-multiplier: 0.5; }
+[data-style~='radius-medium'] { --radius-multiplier: 1; }
+[data-style~='radius-large']  { --radius-multiplier: 2; --radius-btn: var(--radius-full); }
+[data-style~='radius-full']   { --radius-multiplier: 4; --radius-btn: var(--radius-full); --radius-card: var(--radius-full); }
 
 /* 3. Shadow Parameters */
-[data-style~='shadow-soft']  { --shadow-intensity: 1.2; }
-[data-style~='shadow-sharp'] { --shadow-intensity: 0; }
-[data-style~='shadow-retro'] { 
+[data-style~='shadow-none']   { --shadow-intensity: 0; }
+[data-style~='shadow-small']  { --shadow-intensity: 0.5; }
+[data-style~='shadow-medium'] { --shadow-intensity: 1; }
+[data-style~='shadow-large']  { --shadow-intensity: 1.5; }
+[data-style~='shadow-retro']  { 
   --shadow-intensity: 0; 
   --shadow-offset-x: 4px; 
   --shadow-offset-y: 4px; 
 }
 
 /* 4. Border Parameters */
-[data-style~='border-soft']  { --border-weight: 1px; }
-[data-style~='border-sharp'] { --border-weight: var(--border-width-thick); }
-[data-style~='border-retro'] { --border-weight: var(--border-width-heavy); }
+[data-style~='border-hairline'] { --border-weight: 0.5px; }
+[data-style~='border-thin']     { --border-weight: 1px; }
+[data-style~='border-thick']    { --border-weight: var(--border-width-thick); }
+[data-style~='border-heavy']    { --border-weight: var(--border-width-heavy); }
 
 
 /* --- Legacy Compatibility (Bundle Selectors) --- */
