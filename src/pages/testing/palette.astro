@@ -1,114 +1,233 @@
 ---
 import Layout from '@layouts/Common.astro'
+import { BRAND_BASE } from '@utilities/themes/colors'
 
-import { getSemanticBases, generateScale } from '@utilities/themes/colors'
-
-const BRAND_BASE = '#195230'
-
-const semanticBases = getSemanticBases(BRAND_BASE)
-
-const brandScale = {
-  name: 'Primary',
-  title: 'Primary',
-  key: 'base',
-  colors: generateScale(semanticBases.base),
-}
-
-const semanticScales = [
-  {
-    name: 'Success',
-    title: 'Success',
-    key: 'success',
-    colors: generateScale(semanticBases.success),
-  },
-  { name: 'Info', title: 'Info', key: 'info', colors: generateScale(semanticBases.info) },
-  {
-    name: 'Warning',
-    title: 'Warning',
-    key: 'warning',
-    colors: generateScale(semanticBases.warning),
-  },
-  { name: 'Danger', title: 'Danger', key: 'error', colors: generateScale(semanticBases.error) },
-]
-
-const supportScales = [
-  { name: 'Accent', title: 'Accent', key: 'accent', colors: generateScale(semanticBases.accent) },
-  {
-    name: 'Neutral',
-    title: 'Neutral',
-    key: 'neutral',
-    colors: generateScale(semanticBases.neutral),
-  },
-]
-
-const allScales = [brandScale, ...semanticScales, ...supportScales]
 const coreSteps = ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 const lightSurfaceSteps = ['01', '05', '10', '50']
 const darkSurfaceSteps = ['950', '990', '995', '999']
+
+const scales = [
+  { name: 'Primary', title: 'Primary', key: 'base' },
+  { name: 'Success', title: 'Success', key: 'success' },
+  { name: 'Info', title: 'Info', key: 'info' },
+  { name: 'Warning', title: 'Warning', key: 'warning' },
+  { name: 'Danger', title: 'Danger', key: 'error' },
+  { name: 'Accent', title: 'Accent', key: 'accent' },
+  { name: 'Neutral', title: 'Neutral', key: 'neutral' },
+]
 ---
 
+<script>
+  import { oklch, formatHex, parse } from 'culori'
+
+  function getSemanticBases(brandBaseHex: string) {
+    const base = oklch(parse(brandBaseHex)) as any
+
+    return {
+      base: base,
+      accent: {
+        mode: 'oklch',
+        l: base.l + 0.15,
+        c: base.c + 0.08,
+        h: (base.h || 0) + 180
+      },
+      success: {
+        mode: 'oklch',
+        l: base.l + 0.2,
+        c: base.c + 0.06,
+        h: 150
+      },
+      info: {
+        mode: 'oklch',
+        l: base.l + 0.15,
+        c: base.c + 0.05,
+        h: 245
+      },
+      warning: {
+        mode: 'oklch',
+        l: base.l + 0.28,
+        c: base.c + 0.08,
+        h: 70
+      },
+      error: {
+        mode: 'oklch',
+        l: base.l + 0.15,
+        c: base.c + 0.1,
+        h: 5
+      },
+      neutral: {
+        mode: 'oklch',
+        l: 0.5,
+        c: 0.02,
+        h: base.h
+      }
+    }
+  }
+
+  function generateScale(target: any) {
+    const steps = [100, 200, 300, 400, 500, 600, 700, 800, 900]
+    const scale: Record<string, string> = {}
+
+    steps.forEach((step) => {
+      let result: any
+      switch (step) {
+        case 100: result = { ...target, l: 0.96, c: target.c * 0.2 }; break
+        case 200: result = { ...target, l: 0.9, c: target.c * 0.4 }; break
+        case 300: result = { ...target, l: target.l + (0.9 - target.l) * 0.6, c: target.c * 0.7 }; break
+        case 400: result = { ...target, l: target.l + (0.9 - target.l) * 0.3, c: target.c * 0.9 }; break
+        case 500: result = target; break
+        case 600: result = { ...target, l: target.l * 0.85, c: target.c * 0.95 }; break
+        case 700: result = { ...target, l: target.l * 0.72, c: target.c * 0.9 }; break
+        case 800: result = { ...target, l: target.l * 0.58, c: target.c * 0.85 }; break
+        case 900: result = { ...target, l: target.l * 0.45, c: target.c * 0.8 }; break
+        default: result = target
+      }
+      scale[step.toString()] = formatHex(result) || '#000000'
+    })
+    return scale
+  }
+
+  // Generate surface steps
+  function generateSurface(target: any, type: 'light' | 'dark') {
+    const steps = type === 'light' ? ['01', '05', '10', '50'] : ['950', '990', '995', '999']
+    const scale: Record<string, string> = {}
+    
+    steps.forEach(step => {
+      let l: number
+      switch(step) {
+        case '01': l = 0.99; break
+        case '05': l = 0.98; break
+        case '10': l = 0.97; break
+        case '50': l = 0.94; break
+        case '950': l = 0.15; break
+        case '990': l = 0.1; break
+        case '995': l = 0.05; break
+        case '999': l = 0.02; break
+        default: l = target.l
+      }
+      scale[step] = formatHex({ ...target, l, c: target.c * 0.1 }) || '#000000'
+    })
+    return scale
+  }
+
+  document.addEventListener('alpine:init', () => {
+    // @ts-ignore
+    Alpine.data('palette', () => ({
+      brandBase: (Alpine as any).$persist('#195230').as('brandColor'),
+      allScales: {},
+      
+      init() {
+        this.$watch('brandBase', () => this.updateScales())
+        this.updateScales()
+      },
+
+      updateScales() {
+        if (!this.brandBase.startsWith('#') || this.brandBase.length !== 7) return
+        const bases = getSemanticBases(this.brandBase)
+        const newScales: any = {}
+        
+        Object.keys(bases).forEach(key => {
+          newScales[key] = {
+            core: generateScale(bases[key]),
+            light: generateSurface(bases[key], 'light'),
+            dark: generateSurface(bases[key], 'dark')
+          }
+        })
+        this.allScales = newScales
+      }
+    }))
+  })
+</script>
+
 <Layout>
-  <div class="min-h-screen bg-slate-50/50 p-6 md:p-12">
+  <div class="min-h-screen bg-slate-50/50 p-6 md:p-12" x-data="palette">
     
     <!-- Top Level Wrapper: Allows columns to flow in a row on desktop and wrap on small screens -->
     <div class="mx-auto flex max-w-[120rem] flex-wrap justify-between gap-12 xl:flex-nowrap xl:gap-16">
       
       <!-- 1. Brand Color Group -->
-      <div class="flex flex-col gap-6 xl:w-64 xl:shrink-0">
+      <div class="flex flex-col gap-6 xl:w-72 xl:shrink-0">
         <!-- Header -->
-        <div class="flex items-center gap-3 border-b-2 border-slate-200 pb-4">
-          <div class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-sm font-bold text-slate-800">1</div>
-          <h2 class="text-lg font-bold tracking-tight text-slate-800">Brand Color</h2>
+        <div class="flex items-center justify-between border-b-2 border-slate-200 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-sm font-bold text-slate-800">1</div>
+            <h2 class="text-lg font-bold tracking-tight text-slate-800">Brand Color</h2>
+          </div>
+          <!-- Color Picker & HEX Input -->
+          <div class="flex items-center gap-2">
+            <input 
+              type="color" 
+              x-model="brandBase" 
+              class="h-8 w-8 cursor-pointer rounded border-0 bg-transparent p-0"
+            />
+            <input 
+              type="text" 
+              x-model="brandBase" 
+              class="w-20 rounded border border-slate-200 bg-white px-2 py-1 font-mono text-[10px] font-bold uppercase text-slate-600 focus:border-base-hi focus:outline-none"
+              placeholder="#000000"
+            />
+          </div>
         </div>
+
         <!-- Column Grid -->
         <div class="grid grid-cols-1 gap-8">
-          {[brandScale].map(scale => (
-            <div class="flex flex-col gap-4">
-              <!-- Top Card Preview -->
-              <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
-                <div class="flex flex-col">
-                  <span class="text-[0.65rem] font-bold tracking-wider text-slate-400 uppercase">{scale.title}</span>
-                  <div class="flex items-center gap-2 mt-1">
-                    <div class="h-6 w-6 rounded shadow-inner" style={`background-color: var(--${scale.key}-500);`}></div>
-                    <code class="font-mono text-sm font-bold text-slate-800">{scale.colors['500']}</code>
-                  </div>
+          <div class="flex flex-col gap-4">
+            <!-- Top Card Preview -->
+            <div class="fade slide-up flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 shadow-sm" x-show="allScales.base">
+              <div class="flex flex-col">
+                <span class="text-[0.65rem] font-bold tracking-wider text-slate-400 uppercase">Primary</span>
+                <div class="mt-1 flex items-center gap-2">
+                  <div class="h-6 w-6 rounded shadow-inner transition-colors duration-500" :style="allScales.base ? 'background-color: ' + allScales.base.core['500'] : ''"></div>
+                  <code class="font-mono text-sm font-bold text-slate-800" x-text="allScales.base?.core['500']"></code>
                 </div>
               </div>
-
-              <!-- Core Scale 100-900 -->
-               <div class="flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
-                 {coreSteps.map(step => {
-                   const isDark = parseInt(step) >= 500;
-                   return (
-                     <div class={`group flex h-[3.25rem] w-full cursor-crosshair items-center justify-between px-4 transition-transform hover:z-10 hover:scale-[1.02] hover:shadow-md ${isDark ? 'text-white' : 'text-slate-800'}`} style={`background-color: var(--${scale.key}-${step});`}>
-                       <span class="w-8 text-xs font-bold opacity-60">{step}</span>
-                       <span class="font-mono text-xs font-semibold tracking-wider opacity-0 transition-opacity group-hover:opacity-100">{scale.colors[step]}</span>
-                     </div>
-                   );
-                 })}
-               </div>
-
-               <!-- Surface Extrapolations -->
-               <div class="mt-2 flex gap-2">
-                 <!-- Light Surfaces -->
-                 <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
-                   {lightSurfaceSteps.map(step => (
-                     <div class="group flex h-8 w-full cursor-crosshair items-center justify-between px-2 transition-transform hover:z-10 hover:scale-105 hover:shadow-md text-slate-800" style={`background-color: var(--${scale.key}-${step});`}>
-                       <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                     </div>
-                   ))}
-                 </div>
-                 <!-- Dark Surfaces -->
-                 <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
-                     {darkSurfaceSteps.map(step => (
-                     <div class="group flex h-8 w-full cursor-crosshair items-center justify-between px-2 transition-transform hover:z-10 hover:scale-105 hover:shadow-md text-white" style={`background-color: var(--${scale.key}-${step});`}>
-                       <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                     </div>
-                   ))}
-                 </div>
-               </div>
             </div>
-          ))}
+
+            <!-- Core Scale 100-900 -->
+             <div class="stagger flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
+               {coreSteps.map((step) => {
+                 const isDark = parseInt(step) >= 500;
+                 return (
+                    <div 
+                      class={`fade slide-up stagger-item group flex h-[3.25rem] w-full cursor-crosshair items-center justify-between px-4 transition-all duration-500 hover:z-10 hover:scale-[1.02] hover:shadow-md ${isDark ? 'text-white' : 'text-slate-800'}`} 
+                      x-show="allScales.base"
+                      :style={"allScales.base ? 'background-color: ' + allScales.base.core['" + step + "'] : ''"}
+                    >
+                      <span class="w-8 text-xs font-bold opacity-60">{step}</span>
+                      <span class="font-mono text-xs font-semibold tracking-wider opacity-0 transition-opacity group-hover:opacity-100" x-text={"allScales.base?.core['" + step + "']"}></span>
+                    </div>
+                 );
+               })}
+             </div>
+
+             <!-- Surface Extrapolations -->
+             <div class="stagger mt-2 flex gap-2">
+               <!-- Light Surfaces -->
+               <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
+                 {lightSurfaceSteps.map(step => (
+                    <div 
+                      class="fade slide-up stagger-item flex h-8 w-full items-center justify-center transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md" 
+                      x-show="allScales.base"
+                      :style={"allScales.base ? 'background-color: ' + allScales.base.light['" + step + "'] : ''"}
+                    >
+                      <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
+                    </div>
+                 ))}
+               </div>
+               <!-- Dark Surfaces -->
+               <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
+                   {darkSurfaceSteps.map(step => (
+                    <div 
+                      class="fade slide-up stagger-item flex h-8 w-full items-center justify-center transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md text-white" 
+                      x-show="allScales.base"
+                      :style={"allScales.base ? 'background-color: ' + allScales.base.dark['" + step + "'] : ''"}
+                    >
+                      <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
+                    </div>
+                 ))}
+               </div>
+             </div>
+          </div>
         </div>
       </div>
 
@@ -119,48 +238,57 @@ const darkSurfaceSteps = ['950', '990', '995', '999']
           <div class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-sm font-bold text-slate-800">2</div>
           <h2 class="text-lg font-bold tracking-tight text-slate-800">Semantic Colors</h2>
         </div>
-        <!-- Column Grid: Wraps correctly inline -->
+        <!-- Column Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 max-xl:gap-8 lg:grid-cols-4 xl:gap-6">
-          {semanticScales.map(scale => (
+          {['success', 'info', 'warning', 'error'].map(key => (
             <div class="flex flex-col gap-4">
               <!-- Top Card Preview -->
-              <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
+              <div class="fade slide-up flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 shadow-sm" x-show={"allScales['" + key + "']"}>
                 <div class="flex flex-col">
-                  <span class="text-[0.65rem] font-bold tracking-wider text-slate-400 uppercase">{scale.title}</span>
-                  <div class="flex items-center gap-2 mt-1">
-                    <div class="h-6 w-6 rounded shadow-inner" style={`background-color: var(--${scale.key}-500);`}></div>
-                    <code class="font-mono text-sm font-bold text-slate-800">{scale.colors['500']}</code>
+                  <span class="text-[0.65rem] font-bold tracking-wider text-slate-400 capitalize" x-text={`'${key}'`}></span>
+                  <div class="mt-1 flex items-center gap-2">
+                    <div class="h-6 w-6 rounded shadow-inner transition-colors duration-500" :style={"allScales['" + key + "'] ? 'background-color: ' + allScales['" + key + "'].core['500'] : ''"}></div>
+                    <code class="font-mono text-sm font-bold text-slate-800" x-text={"allScales['" + key + "']?.core['500']"}></code>
                   </div>
                 </div>
               </div>
 
-               <!-- Core Scale 100-900 -->
-               <div class="flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
+               <!-- Core Scale -->
+               <div class="stagger flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm" x-show={"allScales['" + key + "']"}>
                  {coreSteps.map(step => {
                    const isDark = parseInt(step) >= 500;
                    return (
-                     <div class={`group flex h-[3.25rem] w-full cursor-crosshair items-center justify-between px-4 transition-transform hover:z-10 hover:scale-[1.02] hover:shadow-md ${isDark ? 'text-white' : 'text-slate-800'}`} style={`background-color: var(--${scale.key}-${step});`}>
-                       <span class="w-8 text-xs font-bold opacity-60">{step}</span>
-                       <span class="font-mono text-xs font-semibold tracking-wider opacity-0 transition-opacity group-hover:opacity-100">{scale.colors[step]}</span>
-                     </div>
+                      <div 
+                        class={`fade slide-up stagger-item group flex h-[3.25rem] w-full cursor-crosshair items-center justify-between px-4 transition-all duration-500 hover:z-10 hover:scale-[1.02] hover:shadow-md ${isDark ? 'text-white' : 'text-slate-800'}`} 
+                        :style={"allScales['" + key + "'] ? 'background-color: ' + allScales['" + key + "'].core['" + step + "'] : ''"}
+                      >
+                        <span class="w-8 text-xs font-bold opacity-60">{step}</span>
+                        <span class="font-mono text-xs font-semibold tracking-wider opacity-0 transition-opacity group-hover:opacity-100" x-text={"allScales['" + key + "']?.core['" + step + "']"}></span>
+                      </div>
                    );
                  })}
                </div>
 
-               <!-- Surface Extrapolations -->
-               <div class="mt-2 flex gap-2">
+               <!-- Surfaces -->
+               <div class="stagger mt-2 flex gap-2" x-show={"allScales['" + key + "']"}>
                  <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
                    {lightSurfaceSteps.map(step => (
-                     <div class="group flex h-8 w-full cursor-crosshair items-center justify-between px-2 transition-transform hover:z-10 hover:scale-105 hover:shadow-md text-slate-800" style={`background-color: var(--${scale.key}-${step});`}>
-                       <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                     </div>
+                      <div 
+                        class="fade slide-up stagger-item flex h-8 w-full items-center justify-center transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md" 
+                        :style={"allScales['" + key + "'] ? 'background-color: ' + allScales['" + key + "'].light['" + step + "'] : ''"}
+                      >
+                        <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
+                      </div>
                    ))}
                  </div>
                  <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
                      {darkSurfaceSteps.map(step => (
-                     <div class="group flex h-8 w-full cursor-crosshair items-center justify-between px-2 transition-transform hover:z-10 hover:scale-105 hover:shadow-md text-white" style={`background-color: var(--${scale.key}-${step});`}>
-                       <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                     </div>
+                      <div 
+                        class="fade slide-up stagger-item flex h-8 w-full items-center justify-center transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md text-white" 
+                        :style={"allScales['" + key + "'] ? 'background-color: ' + allScales['" + key + "'].dark['" + step + "'] : ''"}
+                      >
+                        <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
+                      </div>
                    ))}
                  </div>
                </div>
@@ -178,46 +306,55 @@ const darkSurfaceSteps = ['950', '990', '995', '999']
         </div>
         <!-- Column Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 max-xl:gap-8 xl:gap-6">
-          {supportScales.map(scale => (
+          {['accent', 'neutral'].map(key => (
             <div class="flex flex-col gap-4">
               <!-- Top Card Preview -->
-              <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
+              <div class="fade slide-up flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 shadow-sm" x-show={"allScales['" + key + "']"}>
                 <div class="flex flex-col">
-                  <span class="text-[0.65rem] font-bold tracking-wider text-slate-400 uppercase">{scale.title}</span>
-                  <div class="flex items-center gap-2 mt-1">
-                    <div class="h-6 w-6 rounded shadow-inner" style={`background-color: var(--${scale.key}-500);`}></div>
-                    <code class="font-mono text-sm font-bold text-slate-800">{scale.colors['500']}</code>
+                  <span class="text-[0.65rem] font-bold tracking-wider text-slate-400 capitalize" x-text={`'${key}'`}></span>
+                  <div class="mt-1 flex items-center gap-2">
+                    <div class="h-6 w-6 rounded shadow-inner transition-colors duration-500" :style={"allScales['" + key + "'] ? 'background-color: ' + allScales['" + key + "'].core['500'] : ''"}></div>
+                    <code class="font-mono text-sm font-bold text-slate-800" x-text={"allScales['" + key + "']?.core['500']"}></code>
                   </div>
                 </div>
               </div>
 
-               <!-- Core Scale 100-900 -->
-               <div class="flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
+               <!-- Core Scale -->
+               <div class="stagger flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm" x-show={"allScales['" + key + "']"}>
                  {coreSteps.map(step => {
                    const isDark = parseInt(step) >= 500;
                    return (
-                     <div class={`group flex h-[3.25rem] w-full cursor-crosshair items-center justify-between px-4 transition-transform hover:z-10 hover:scale-[1.02] hover:shadow-md ${isDark ? 'text-white' : 'text-slate-800'}`} style={`background-color: var(--${scale.key}-${step});`}>
-                       <span class="w-8 text-xs font-bold opacity-60">{step}</span>
-                       <span class="font-mono text-xs font-semibold tracking-wider opacity-0 transition-opacity group-hover:opacity-100">{scale.colors[step]}</span>
-                     </div>
+                      <div 
+                        class={`fade slide-up stagger-item group flex h-[3.25rem] w-full cursor-crosshair items-center justify-between px-4 transition-all duration-500 hover:z-10 hover:scale-[1.02] hover:shadow-md ${isDark ? 'text-white' : 'text-slate-800'}`} 
+                        :style={"allScales['" + key + "'] ? 'background-color: ' + allScales['" + key + "'].core['" + step + "'] : ''"}
+                      >
+                        <span class="w-8 text-xs font-bold opacity-60">{step}</span>
+                        <span class="font-mono text-xs font-semibold tracking-wider opacity-0 transition-opacity group-hover:opacity-100" x-text={"allScales['" + key + "']?.core['" + step + "']"}></span>
+                      </div>
                    );
                  })}
                </div>
 
-               <!-- Surface Extrapolations -->
-               <div class="mt-2 flex gap-2">
+               <!-- Surfaces -->
+               <div class="stagger mt-2 flex gap-2" x-show={"allScales['" + key + "']"}>
                  <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
                    {lightSurfaceSteps.map(step => (
-                     <div class="group flex h-8 w-full cursor-crosshair items-center justify-between px-2 transition-transform hover:z-10 hover:scale-105 hover:shadow-md text-slate-800" style={`background-color: var(--${scale.key}-${step});`}>
-                       <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                     </div>
+                      <div 
+                        class="fade slide-up stagger-item flex h-8 w-full items-center justify-center transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md text-slate-800" 
+                        :style={"allScales['" + key + "'] ? 'background-color: ' + allScales['" + key + "'].light['" + step + "'] : ''"}
+                      >
+                        <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
+                      </div>
                    ))}
                  </div>
                  <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
                      {darkSurfaceSteps.map(step => (
-                     <div class="group flex h-8 w-full cursor-crosshair items-center justify-between px-2 transition-transform hover:z-10 hover:scale-105 hover:shadow-md text-white" style={`background-color: var(--${scale.key}-${step});`}>
-                       <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                     </div>
+                      <div 
+                        class="fade slide-up stagger-item flex h-8 w-full items-center justify-center transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md text-white" 
+                        :style={"allScales['" + key + "'] ? 'background-color: ' + allScales['" + key + "'].dark['" + step + "'] : ''"}
+                      >
+                        <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
+                      </div>
                    ))}
                  </div>
                </div>
