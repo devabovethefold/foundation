@@ -11,27 +11,31 @@ import { Icon } from 'astro-icon/components';
        radius: '', 
        shadow: '', 
        border: '',
+       type: '',
        get combinedStyle() {
-         return [this.spacing, this.radius, this.shadow, this.border].filter(Boolean).join(' ') || 'standard';
+         return [this.spacing, this.radius, this.shadow, this.border, this.type].filter(Boolean).join(' ') || 'standard';
        },
        setPreset(p) {
          if (p === 'standard') {
-           this.spacing = ''; this.radius = ''; this.shadow = ''; this.border = '';
+           this.spacing = ''; this.radius = ''; this.shadow = ''; this.border = ''; this.type = '';
          } else if (p === 'soft') {
            this.spacing = 'spacing-large';
            this.radius = 'radius-large';
            this.shadow = 'shadow-large';
            this.border = 'border-thin';
+           this.type = '';
          } else if (p === 'sharp') {
            this.spacing = 'spacing-small';
            this.radius = 'radius-none';
            this.shadow = 'shadow-none';
            this.border = 'border-thick';
+           this.type = '';
          } else if (p === 'retro') {
            this.spacing = 'spacing-medium';
            this.radius = 'radius-none';
            this.shadow = 'shadow-retro';
            this.border = 'border-heavy';
+           this.type = '';
          }
        }
     }" 
@@ -102,6 +106,17 @@ import { Icon } from 'astro-icon/components';
           <button @click="border = ''" :class="border === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Medium</button>
           <button @click="border = 'border-thick'" :class="border === 'border-thick' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Thick</button>
           <button @click="border = 'border-heavy'" :class="border === 'border-heavy' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Heavy</button>
+        </div>
+      </div>
+
+      <!-- Typography Scale -->
+      <div class="space-y-2">
+        <label class="text-[10px] font-bold uppercase tracking-widest opacity-50">Typography Scale</label>
+        <div class="flex flex-wrap gap-1">
+          <button @click="type = 'type-tight'" :class="type === 'type-tight' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Tight</button>
+          <button @click="type = ''" :class="type === '' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Medium</button>
+          <button @click="type = 'type-loose'" :class="type === 'type-loose' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Loose</button>
+          <button @click="type = 'type-golden'" :class="type === 'type-golden' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'" class="px-1.5 py-1 text-[9px] border rounded transition-all">Golden</button>
         </div>
       </div>
     </div>

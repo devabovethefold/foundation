@@ -9,14 +9,16 @@
   --radius-badge: var(--radius-full);
   --border-weight: var(--border-width-thin);
   
-  /* Semantic Spacing Mappings */
-  --spacing-tile: var(--spacing-4);
-  --spacing-card: var(--spacing-8);
-  --spacing-accordion: var(--spacing-4);
-  --spacing-input-x: var(--spacing-3);
-  --spacing-input-y: var(--spacing-2);
+  /* Semantic Spacing Mappings (Reactive) */
+  --spacing-tile: calc(4 * var(--spacing-basis));
+  --spacing-card: calc(8 * var(--spacing-basis));
+  --spacing-accordion: calc(4 * var(--spacing-basis));
+  --spacing-input-x: calc(3 * var(--spacing-basis));
+  --spacing-input-y: calc(2 * var(--spacing-basis));
 
-  /* Global Basis Defaults (Inherited from tokens.css/spacing.css) */
+  /* Default Scale Anchors */
+  --shadow-intensity: 1;
+  --spacing-basis: 0.25rem;
 }
 
 /* --- Granular Style Controls --- */
@@ -50,6 +52,12 @@
 [data-style~='border-thin']     { --border-weight: 1px; }
 [data-style~='border-thick']    { --border-weight: var(--border-width-thick); }
 [data-style~='border-heavy']    { --border-weight: var(--border-width-heavy); }
+
+/* 5. Typography Parameters */
+[data-style~='type-tight']  { --font-scale: 1.125; } /* Major Second */
+[data-style~='type-medium'] { --font-scale: 1.2; }   /* Minor Third (Default) */
+[data-style~='type-loose']  { --font-scale: 1.414; } /* Augmented Fourth */
+[data-style~='type-golden'] { --font-scale: 1.618; } /* Golden Ratio */
 
 
 /* --- Legacy Compatibility (Bundle Selectors) --- */
