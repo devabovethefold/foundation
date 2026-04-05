@@ -16,7 +16,7 @@ button,
   }
 
   &.btn-transparent {
-    @apply border-transparent bg-transparent;
+    @apply text-neutral-md border-transparent bg-transparent;
   }
 }
 
