@@ -178,6 +178,11 @@ import '@styles/pages/testing-components.css'
         <label class="text-[10px] font-bold tracking-widest uppercase opacity-50">Borders</label>
         <div class="flex flex-wrap gap-1">
           <button
+            @click="border = 'border-none'"
+            :class="border === 'border-none' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'"
+            class="rounded border px-1.5 py-1 text-[9px] transition-all">None</button
+          >
+          <button
             @click="border = 'border-hairline'"
             :class="border === 'border-hairline' ? 'border-base-hi bg-base-lo/10' : 'border-neutral-lo'"
             class="rounded border px-1.5 py-1 text-[9px] transition-all">Hairline</button

@@ -50,6 +50,7 @@
 }
 
 /* 4. Border Parameters */
+[data-style~='border-none']     { --border-weight: 0px; }
 [data-style~='border-hairline'] { --border-weight: 0.5px; }
 [data-style~='border-thin']     { --border-weight: 1px; }
 [data-style~='border-thick']    { --border-weight: var(--border-width-thick); }
