@@ -9,7 +9,9 @@ import tailwindcss from '@tailwindcss/vite'
 import cloudflare from '@astrojs/cloudflare'
 
 export default defineConfig({
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    prerenderEnvironment: 'node'
+  }),
   integrations: [
     alpinejs({ entrypoint: './src/utilities/alpine/index.ts' }),
     icon({
