@@ -1,5 +1,5 @@
 // @ts-check
-import {defineConfig} from 'astro/config'
+import {defineConfig, envField} from 'astro/config'
 
 import alpinejs from '@astrojs/alpinejs'
 import cloudflare from '@astrojs/cloudflare'
@@ -9,9 +9,21 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: 'cloudflare-binding'
   }),
+  env: {
+    schema: {
+      PUBLIC_IMAGE_HOST: envField.string({
+        context: 'client',
+        access: 'public',
+        default: 'images.tryabovethefold.org'
+      })
+    }
+  },
   image: {
+    service: {
+      entrypoint: '@utilities/images/service.ts'
+    },
     remotePatterns: [
-      {protocol: 'https', hostname: '**.r2.dev'},
+      {protocol: 'https', hostname: 'pub-*.r2.dev'},
       {protocol: 'https', hostname: 'images.tryabovethefold.org'}
     ]
   },
