@@ -23,7 +23,7 @@ export default defineConfig({
       entrypoint: '@utilities/images/service.ts'
     },
     remotePatterns: [
-      {protocol: 'https', hostname: 'pub-*.r2.dev'},
+      {protocol: 'https', hostname: '*.r2.dev'},
       {protocol: 'https', hostname: 'images.tryabovethefold.org'}
     ]
   },
