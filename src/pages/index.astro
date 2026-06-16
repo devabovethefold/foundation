@@ -1,6 +1,8 @@
 ---
 import Layout from '@layouts/Base.astro'
 
+import {Image} from 'astro:assets'
+
 const base = 'https://images.tryabovethefold.org'
 
 // your 3 images
@@ -22,4 +24,10 @@ const description = 'Starting with a solid base.'
   <img src={images.png} width="400" />
   <img src={images.jpg} width="400" />
   <img src={images.webp} width="400" />
+
+  <h2>Cloudflare Optimized</h2>
+
+  <Image src={images.png} width={400} alt="Optimized PNG" />
+  <Image src={images.jpg} width={400} alt="Optimized JPG" />
+  <Image src={images.webp} width={400} alt="Optimized WebP" />
 </Layout>
