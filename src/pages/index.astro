@@ -13,7 +13,8 @@ const description = 'Starting with a solid base.'
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <Image
         src="https://images.tryabovethefold.org/01KSXB591VARVRRVKFVDGYW4Z4.webp"
-        width={800}
+        widths={[400, 800, 1200]}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         inferSize={true}
         fetchpriority="high"
         loading="eager"
@@ -22,7 +23,8 @@ const description = 'Starting with a solid base.'
       />
       <Image
         src="https://images.tryabovethefold.org/01KSXB61CR86XD8PC1GYQ7E3X1.jpg"
-        width={800}
+        widths={[400, 800, 1200]}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         inferSize={true}
         fetchpriority="high"
         loading="eager"
@@ -31,7 +33,8 @@ const description = 'Starting with a solid base.'
       />
       <Image
         src="https://images.tryabovethefold.org/01KSXB50J164JFTWRACN015NPE.png"
-        width={800}
+        widths={[400, 800, 1200]}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         inferSize={true}
         fetchpriority="high"
         loading="eager"
