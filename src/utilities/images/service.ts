@@ -7,7 +7,8 @@ const service: ExternalImageService = {
     return options
   },
   getURL(options) {
-    const filename = options.src.split('/').pop()
+    const src = typeof options.src === 'string' ? options.src : options.src.src
+    const filename = src.split('/').pop()
 
     return `https://${PUBLIC_IMAGE_HOST}/cdn-cgi/image/width=${options.width},format=${options.format || 'auto'}/${filename}`
   },

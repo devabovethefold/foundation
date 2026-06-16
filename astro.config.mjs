@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   adapter: cloudflare({
-    imageService: 'cloudflare-binding'
+    imageService: 'custom'
   }),
   env: {
     schema: {
