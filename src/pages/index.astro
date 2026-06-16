@@ -1,10 +1,25 @@
 ---
 import Layout from '@layouts/Base.astro'
 
+const base = 'https://images.tryabovethefold.org'
+
+// your 3 images
+const images = {
+  png: `${base}/01KSXB50J164JFTWRACN015NPE.png`,
+  webp: `${base}/01KSXB591VARVRRVKFVDGYW4Z4.webp`,
+  jpg: `${base}/01KSXB61CR86XD8PC1GYQ7E3X1.jpg`
+}
+
 const title = 'Foundation'
 const description = 'Starting with a solid base.'
 ---
 
 <Layout {title} {description}>
-  <p>{title}</p>
+  <h1>R2 Image Optimization Test</h1>
+
+  <h2>Original formats</h2>
+
+  <img src={images.png} width="400" />
+  <img src={images.jpg} width="400" />
+  <img src={images.webp} width="400" />
 </Layout>
