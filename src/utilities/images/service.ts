@@ -13,15 +13,8 @@ const service: ExternalImageService = {
     return `https://${PUBLIC_IMAGE_HOST}/cdn-cgi/image/width=${options.width},format=${options.format || 'auto'}/${filename}`
   },
   getHTMLAttributes(options) {
-    return {
-      src: options.src,
-      width: options.width,
-      height: options.height,
-      alt: options.alt,
-      loading: options.loading,
-      decoding: options.decoding,
-      class: options.class
-    }
+    const {src, format, quality, ...attributes} = options
+    return attributes
   }
 }
 
