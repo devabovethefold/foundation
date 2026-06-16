@@ -7,13 +7,13 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   adapter: cloudflare({
-    imageService: 'cloudflare-binding',
+    imageService: 'cloudflare-binding'
   }),
   image: {
     remotePatterns: [
-      { protocol: 'https', hostname: '**.r2.dev' },
-  { protocol: 'https', hostname: 'images.tryabovethefold.org' },
-    ],
+      {protocol: 'https', hostname: '**.r2.dev'},
+      {protocol: 'https', hostname: 'images.tryabovethefold.org'}
+    ]
   },
   integrations: [alpinejs()],
   output: 'server',
