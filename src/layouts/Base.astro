@@ -2,6 +2,7 @@
 import Head from '@landmarks/Head.astro'
 import Footer from '@landmarks/Footer.astro'
 import Header from '@landmarks/Header.astro'
+import Hero from '@landmarks/Hero.astro'
 
 interface Props {
   title: string
@@ -16,6 +17,7 @@ const {title = 'Foundation', description = ''} = Astro.props
   <body>
     <Header />
     <main>
+      <Hero {title} />
       <slot />
     </main>
     <Footer />
