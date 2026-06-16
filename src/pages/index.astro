@@ -5,11 +5,10 @@ import {Image} from 'astro:assets'
 
 const base = 'https://images.tryabovethefold.org'
 
-// your 3 images
 const images = {
   png: `${base}/01KSXB50J164JFTWRACN015NPE.png`,
-  webp: `${base}/01KSXB591VARVRRVKFVDGYW4Z4.webp`,
-  jpg: `${base}/01KSXB61CR86XD8PC1GYQ7E3X1.jpg`
+  jpg: `${base}/01KSXB61CR86XD8PC1GYQ7E3X1.jpg`,
+  webp: `${base}/01KSXB591VARVRRVKFVDGYW4Z4.webp`
 }
 
 const title = 'R2 Image Optimization Test'
@@ -21,17 +20,17 @@ const description = 'Starting with a solid base.'
     <div class="grid grid-cols-2 gap-4">
       <div>
         <h2>Original formats</h2>
-        <img src="{images.png}" width="400" />
-        <img src={images.jpg} width="400" />
         <img src={images.webp} width="400" />
+        <img src={images.jpg} width="400" />
+        <img src={images.png} width="400" />
       </div>
       <div>
         <h2>Cloudflare Optimized</h2>
         <Image
-          src="https://images.tryabovethefold.org/01KSXB50J164JFTWRACN015NPE.png"
+          src="https://images.tryabovethefold.org/01KSXB61CR86XD8PC1GYQ7E3X1.jpg"
           width={400}
           height={400}
-          alt="Optimized PNG"
+          alt="Optimized WebP"
         />
         <Image
           src="https://images.tryabovethefold.org/01KSXB591VARVRRVKFVDGYW4Z4.webp"
@@ -40,10 +39,10 @@ const description = 'Starting with a solid base.'
           alt="Optimized JPG"
         />
         <Image
-          src="https://images.tryabovethefold.org/01KSXB61CR86XD8PC1GYQ7E3X1.jpg"
+          src="https://images.tryabovethefold.org/01KSXB50J164JFTWRACN015NPE.png"
           width={400}
           height={400}
-          alt="Optimized WebP"
+          alt="Optimized PNG"
         />
       </div>
     </div>
