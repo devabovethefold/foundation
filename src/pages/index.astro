@@ -10,23 +10,25 @@ const description = 'Starting with a solid base.'
 <Layout {title} {description}>
   <section>
     <h2>Cloudflare Optimized</h2>
-    <Image
-      src="https://images.tryabovethefold.org/01KSXB591VARVRRVKFVDGYW4Z4.webp"
-      width={400}
-      height={400}
-      alt="Optimized WebP"
-    />
-    <Image
-      src="https://images.tryabovethefold.org/01KSXB61CR86XD8PC1GYQ7E3X1.jpg"
-      width={400}
-      height={400}
-      alt="Optimized JPG"
-    />
-    <Image
-      src="https://images.tryabovethefold.org/01KSXB50J164JFTWRACN015NPE.png"
-      width={400}
-      height={400}
-      alt="Optimized PNG"
-    />
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <Image
+        src="https://images.tryabovethefold.org/01KSXB591VARVRRVKFVDGYW4Z4.webp"
+        width={400}
+        height={400}
+        alt="Optimized WebP"
+      />
+      <Image
+        src="https://images.tryabovethefold.org/01KSXB61CR86XD8PC1GYQ7E3X1.jpg"
+        width={400}
+        height={400}
+        alt="Optimized JPG"
+      />
+      <Image
+        src="https://images.tryabovethefold.org/01KSXB50J164JFTWRACN015NPE.png"
+        width={400}
+        height={400}
+        alt="Optimized PNG"
+      />
+    </div>
   </section>
 </Layout>
