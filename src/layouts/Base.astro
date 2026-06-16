@@ -34,7 +34,11 @@ const { title = "Foundation", description = "" } = Astro.props;
 
   <body>
     <header>
-      <nav></nav>
+      <nav class="flex gap-2">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </nav>
     </header>
     <main>
       <slot />
