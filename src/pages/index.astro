@@ -12,22 +12,23 @@ const images = {
   jpg: `${base}/01KSXB61CR86XD8PC1GYQ7E3X1.jpg`
 }
 
-const title = 'Foundation'
+const title = 'R2 Image Optimization Test'
 const description = 'Starting with a solid base.'
 ---
 
 <Layout {title} {description}>
-  <h1>R2 Image Optimization Test</h1>
-
-  <h2>Original formats</h2>
-
-  <img src={images.png} width="400" />
-  <img src={images.jpg} width="400" />
-  <img src={images.webp} width="400" />
-
-  <h2>Cloudflare Optimized</h2>
-
-  <Image src={images.png} width={400} alt="Optimized PNG" />
-  <Image src={images.jpg} width={400} alt="Optimized JPG" />
-  <Image src={images.webp} width={400} alt="Optimized WebP" />
+  <section>
+    <div class="grid grid-cols-2 gap-4">
+      <h2>Original formats</h2>
+      <img src={images.png} width="400" />
+      <img src={images.jpg} width="400" />
+      <img src={images.webp} width="400" />
+    </div>
+    <div>
+      <h2>Cloudflare Optimized</h2>
+      <Image src={images.png} width={400} alt="Optimized PNG" />
+      <Image src={images.jpg} width={400} alt="Optimized JPG" />
+      <Image src={images.webp} width={400} alt="Optimized WebP" />
+    </div>
+  </section>
 </Layout>
