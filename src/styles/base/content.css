@@ -1,0 +1,56 @@
+@reference "tailwindcss";
+
+@utility split-* {
+  --split-count: --value(integer);
+  --split-ratio: --value(ratio);
+}
+
+@utility content {
+  @apply gap-x-content grid;
+
+  --gap-count: 4;
+  --gap-total: calc(var(--gap-count) * var(--gap-content));
+
+  --width-content: min(var(--max-width-content), 100% - var(--gap-total));
+
+  &.breakout {
+    --max-width-content: var(--max-width-breakout);
+  }
+
+  --content-integer: repeat(
+    var(--split-count),
+    calc(
+      (var(--width-content) - ((var(--split-count) - 1) * var(--gap-content))) /
+        var(--split-count)
+    )
+  );
+  --content-ratio: calc(
+      var(--width-content) * var(--split-ratio) - (1 - var(--split-ratio)) *
+        var(--gap-content)
+    )
+    calc(
+      var(--width-content) * calc(1 - var(--split-ratio)) - var(--split-ratio) *
+        var(--gap-content)
+    );
+
+  grid-template-columns:
+    [screen-start]
+    0px
+    [fullwidth-start]
+    auto
+    [content-start]
+    var(--content-ratio, var(--content-integer, var(--width-content)))
+    [content-end]
+    auto
+    [fullwidth-end]
+    0px
+    [screen-end];
+
+  > * {
+    grid-column: content;
+  }
+
+  > .wrap {
+    @apply grid lg:grid-cols-subgrid;
+  }
+}

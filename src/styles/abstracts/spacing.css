@@ -1,0 +1,8 @@
+@theme {
+  --padding-section: clamp(2rem, -1rem + 7.5vw, 5rem);
+
+  --max-width-content: 70.5rem;
+  --max-width-breakout: 86.25rem;
+
+  --gap-content: clamp(0.5rem, -1rem + 3.75vw, 2rem);
+}

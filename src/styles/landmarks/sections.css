@@ -1,0 +1,5 @@
+@reference "tailwindcss";
+
+section {
+  @apply py-section content;
+}

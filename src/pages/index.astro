@@ -8,40 +8,72 @@ const description = 'Starting with a solid base.'
 ---
 
 <Layout {title} {description}>
-  <section>
-    <h2>Cloudflare Optimized</h2>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <Image
-        src="https://images.tryabovethefold.org/01KSXB591VARVRRVKFVDGYW4Z4.webp"
-        widths={[400, 800, 1200]}
-        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        inferSize={true}
-        fetchpriority="high"
-        loading="eager"
-        alt="Optimized WebP"
-        class="h-auto w-full object-cover"
-      />
-      <Image
-        src="https://images.tryabovethefold.org/01KSXB61CR86XD8PC1GYQ7E3X1.jpg"
-        widths={[400, 800, 1200]}
-        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        inferSize={true}
-        fetchpriority="high"
-        loading="eager"
-        quality={20}
-        alt="Optimized JPG"
-        class="h-auto w-full object-cover"
-      />
-      <Image
-        src="https://images.tryabovethefold.org/01KSXB50J164JFTWRACN015NPE.png"
-        widths={[400, 800, 1200]}
-        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        inferSize={true}
-        fetchpriority="high"
-        loading="eager"
-        alt="Optimized PNG"
-        class="h-auto w-full object-cover"
-      />
-    </div>
+  <section class="split-3 bg-green-50">
+    <header>
+      <h2>Here is a section</h2>
+    </header>
+    <p>
+      This section has custom styles defined in @layouts/sections.astro and
+      custom spacing defined in @abstracts/spacing.css
+    </p>
+    <p>
+      Notice the theme variables being used to define the spacing, as well as
+      the custom grid layout
+    </p>
+  </section>
+  <section class="split-1/4">
+    <header>
+      <h2>Here Is Another Section</h2>
+    </header>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
+      possimus optio numquam ad beatae tempora incidunt, assumenda commodi a, ut
+      nihil rerum excepturi exercitationem! Rem voluptates blanditiis eos.
+      Cumque, sint?
+    </p>
+  </section>
+  <section class="breakout split-3 bg-amber-50">
+    <header>
+      <h2>Cloudflare Optimized</h2>
+    </header>
+    <ul class="wrap">
+      <li>
+        <Image
+          src="https://images.tryabovethefold.org/01KSXB591VARVRRVKFVDGYW4Z4.webp"
+          widths={[400, 800, 1200]}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          inferSize={true}
+          fetchpriority="high"
+          loading="eager"
+          alt="Optimized WebP"
+          class="h-auto w-full object-cover"
+        />
+      </li>
+      <li>
+        <Image
+          src="https://images.tryabovethefold.org/01KSXB61CR86XD8PC1GYQ7E3X1.jpg"
+          widths={[400, 800, 1200]}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          inferSize={true}
+          fetchpriority="high"
+          loading="eager"
+          quality={20}
+          alt="Optimized JPG"
+          class="h-auto w-full object-cover"
+        />
+      </li>
+      <li>
+        <Image
+          src="https://images.tryabovethefold.org/01KSXB50J164JFTWRACN015NPE.png"
+          widths={[400, 800, 1200]}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          inferSize={true}
+          fetchpriority="high"
+          loading="eager"
+          alt="Optimized PNG"
+          class="h-auto w-full object-cover"
+        />
+      </li>
+    </ul>
   </section>
 </Layout>

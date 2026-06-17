@@ -1,1 +1,13 @@
 @import 'tailwindcss';
+
+/* abstracts */
+@import './abstracts/fonts.css';
+@import './abstracts/spacing.css';
+
+/* base */
+@import './base/content.css';
+@import './base/typography.css';
+
+/* landmarks */
+@import './landmarks/header.css';
+@import './landmarks/sections.css';
