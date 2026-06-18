@@ -22,3 +22,18 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# SQLite temporary and journal files
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite-journal
+# (Optional) Ignore the SQLite database itself if it stores local/dynamic data
+# *.sqlite
+# *.db
+
+# Cloudflare Wrangler local state
+.wrangler/
+
+# local environment files
+.env.local
+.env.*.local
