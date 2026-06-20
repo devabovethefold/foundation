@@ -5,32 +5,29 @@
   --split-ratio: --value(ratio);
 }
 
-@utility content {
+@utility content-* {
   @apply gap-x-content grid;
+
+  --max-width-content: var(--max-width-content-md);
+  --max-width-content: --value(--max-width-content-*);
 
   --gap-count: 4;
   --gap-total: calc(var(--gap-count) * var(--gap-content));
 
   --width-content: min(var(--max-width-content), 100% - var(--gap-total));
 
-  &.breakout {
-    --max-width-content: var(--max-width-breakout);
-  }
-
   --content-integer: repeat(
     var(--split-count),
     calc(
-      (var(--width-content) - ((var(--split-count) - 1) * var(--gap-content))) /
-        var(--split-count)
+      (var(--width-content) - ((var(--split-count) - 1) * var(--gap-content))) / var(--split-count)
     )
   );
+
   --content-ratio: calc(
-      var(--width-content) * var(--split-ratio) - (1 - var(--split-ratio)) *
-        var(--gap-content)
+      var(--width-content) * var(--split-ratio) - (1 - var(--split-ratio)) * var(--gap-content)
     )
     calc(
-      var(--width-content) * calc(1 - var(--split-ratio)) - var(--split-ratio) *
-        var(--gap-content)
+      var(--width-content) * calc(1 - var(--split-ratio)) - var(--split-ratio) * var(--gap-content)
     );
 
   grid-template-columns:
@@ -50,7 +47,15 @@
     grid-column: content;
   }
 
+  &.fullwidth > * {
+    grid-column: fullwidth;
+  }
+
+  &.screen > * {
+    grid-column: screen;
+  }
+
   > .wrap {
-    @apply grid lg:grid-cols-subgrid;
+    @apply gap-y-content grid lg:grid-cols-subgrid;
   }
 }

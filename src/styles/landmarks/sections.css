@@ -1,5 +1,10 @@
 @reference "tailwindcss";
+@reference "../base/content.css";
 
 section {
-  @apply py-section content;
+  @apply py-section;
+
+  &:not([class*='content']) {
+    @apply content-md;
+  }
 }

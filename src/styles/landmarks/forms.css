@@ -1,0 +1,13 @@
+@reference "tailwindcss";
+
+form {
+  @apply grid gap-3;
+
+  :has(> label) {
+    @apply grid gap-y-1;
+  }
+
+  :has(> [type='checkbox'], > [type='radio']) {
+    @apply flex w-full items-center gap-x-2;
+  }
+}

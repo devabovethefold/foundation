@@ -13,26 +13,14 @@ const description = 'Starting with a solid base.'
       <h2>Here is a section</h2>
     </header>
     <p>
-      This section has custom styles defined in @layouts/sections.astro and
-      custom spacing defined in @abstracts/spacing.css
+      This section has custom styles defined in @layouts/sections.astro and custom spacing defined
+      in @abstracts/spacing.css
     </p>
     <p>
-      Notice the theme variables being used to define the spacing, as well as
-      the custom grid layout
+      Notice the theme variables being used to define the spacing, as well as the custom grid layout
     </p>
   </section>
-  <section class="split-1/4">
-    <header>
-      <h2>Here Is Another Section</h2>
-    </header>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-      possimus optio numquam ad beatae tempora incidunt, assumenda commodi a, ut
-      nihil rerum excepturi exercitationem! Rem voluptates blanditiis eos.
-      Cumque, sint?
-    </p>
-  </section>
-  <section class="breakout split-3 bg-amber-50">
+  <section class="content-lg split-3">
     <header>
       <h2>Cloudflare Optimized</h2>
     </header>
@@ -75,5 +63,120 @@ const description = 'Starting with a solid base.'
         />
       </li>
     </ul>
+  </section>
+  <section class="content-xs split-1/4 bg-amber-50">
+    <header>
+      <h2>Here Is Another Section</h2>
+    </header>
+    <form>
+      <div>
+        <label for="name">Full Name</label>
+        <input id="name" name="name" type="text" placeholder="Jane Doe" />
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="jane@example.com" />
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" />
+      </div>
+
+      <div>
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" placeholder="(555) 555-5555" />
+      </div>
+
+      <div>
+        <label for="website">Website</label>
+        <input id="website" name="website" type="url" placeholder="https://example.com" />
+      </div>
+
+      <div>
+        <label for="age">Age</label>
+        <input id="age" name="age" type="number" min="0" max="120" />
+      </div>
+
+      <div>
+        <label for="date">Date</label>
+        <input id="date" name="date" type="date" />
+      </div>
+
+      <div>
+        <label for="time">Time</label>
+        <input id="time" name="time" type="time" />
+      </div>
+
+      <div>
+        <label for="search">Search</label>
+        <input id="search" name="search" type="search" placeholder="Search..." />
+      </div>
+
+      <div>
+        <label for="country">Country</label>
+        <select id="country" name="country">
+          <option value="">Select a country</option>
+          <option value="us">United States</option>
+          <option value="ca">Canada</option>
+          <option value="uk">United Kingdom</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="skills">Skills</label>
+        <select id="skills" name="skills" multiple>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="js">JavaScript</option>
+          <option value="tailwind">Tailwind</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="bio">Bio</label>
+        <textarea id="bio" name="bio" rows="4"></textarea>
+      </div>
+
+      <fieldset>
+        <legend>Preferences</legend>
+
+        <div>
+          <input id="notifications" name="notifications" type="checkbox" />
+          <label for="notifications"> Email notifications </label>
+        </div>
+
+        <div>
+          <input id="marketing" name="marketing" type="checkbox" checked />
+          <label for="marketing"> Marketing emails </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Plan</legend>
+
+        <div>
+          <input id="plan-free" name="plan" type="radio" value="free" checked />
+          <label for="plan-free">Free</label>
+        </div>
+
+        <div>
+          <input id="plan-pro" name="plan" type="radio" value="pro" />
+          <label for="plan-pro">Pro</label>
+        </div>
+      </fieldset>
+
+      <div>
+        <label for="avatar">Avatar</label>
+        <input id="avatar" name="avatar" type="file" />
+      </div>
+
+      <div>
+        <button type="submit">Submit</button>
+
+        <button type="reset">Reset</button>
+      </div>
+    </form>
   </section>
 </Layout>

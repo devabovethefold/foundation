@@ -13,6 +13,7 @@
     "generate-types": "wrangler types"
   },
   "dependencies": {
+    "@alpinejs/persist": "^3.15.12",
     "@astrojs/alpinejs": "^0.5.0",
     "@astrojs/cloudflare": "^13.7.0",
     "@tailwindcss/vite": "^4.3.1",
@@ -26,6 +27,8 @@
     "vite": "^7"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.11",
+    "culori": "^4.0.2",
     "prettier": "3.8.4",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.8.0"

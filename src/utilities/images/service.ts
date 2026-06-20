@@ -69,18 +69,10 @@ const service: ExternalImageService = {
   },
 
   getSrcSet(options) {
-    const {
-      widths,
-      densities,
-      width,
-      height,
-      format,
-      ...transformWithoutDimensions
-    } = options
+    const {widths, densities, width, height, format, ...transformWithoutDimensions} = options
 
     const wVal = typeof width === 'number' ? width : parseInt(width || '0', 10)
-    const hVal =
-      typeof height === 'number' ? height : parseInt(height || '0', 10)
+    const hVal = typeof height === 'number' ? height : parseInt(height || '0', 10)
     const aspectRatio = wVal > 0 && hVal > 0 ? wVal / hVal : 1
 
     let targetWidths: {width: number; descriptor: string}[] = []
@@ -91,9 +83,7 @@ const service: ExternalImageService = {
         descriptor: `${w}w`
       }))
     } else if (densities) {
-      const parsedDensities = densities.map(d =>
-        typeof d === 'number' ? d : parseFloat(d)
-      )
+      const parsedDensities = densities.map(d => (typeof d === 'number' ? d : parseFloat(d)))
       targetWidths = parsedDensities.map(density => ({
         width: Math.round(wVal * density),
         descriptor: `${density}x`

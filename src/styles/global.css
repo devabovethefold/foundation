@@ -2,12 +2,19 @@
 
 /* abstracts */
 @import './abstracts/fonts.css';
+@import './abstracts/palette.css';
 @import './abstracts/spacing.css';
 
 /* base */
 @import './base/content.css';
 @import './base/typography.css';
 
+/* components */
+
 /* landmarks */
+@import './landmarks/forms.css';
 @import './landmarks/header.css';
 @import './landmarks/sections.css';
+
+/* vendors */
+@plugin '@tailwindcss/forms';

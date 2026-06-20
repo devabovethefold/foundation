@@ -1,5 +1,5 @@
 // @ts-check
-import {defineConfig, envField} from 'astro/config'
+import {defineConfig, envField, fontProviders} from 'astro/config'
 
 import alpinejs from '@astrojs/alpinejs'
 import cloudflare from '@astrojs/cloudflare'
@@ -9,6 +9,16 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: 'custom'
   }),
+  fonts: [
+    {
+      name: 'Inter',
+      cssVariable: '--font-inter',
+      fallbacks: ['sans-serif'],
+      provider: fontProviders.google(),
+      styles: ['normal'],
+      weights: ['400 700']
+    }
+  ],
   env: {
     schema: {
       PUBLIC_IMAGE_HOST: envField.string({
@@ -27,7 +37,11 @@ export default defineConfig({
       {protocol: 'https', hostname: 'images.tryabovethefold.org'}
     ]
   },
-  integrations: [alpinejs()],
+  integrations: [
+    alpinejs({
+      entrypoint: './src/utilities/alpinejs/index.ts'
+    })
+  ],
   output: 'server',
   vite: {
     plugins: [tailwindcss()]

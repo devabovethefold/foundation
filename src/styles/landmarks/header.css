@@ -1,5 +1,3 @@
 header:has(h2, h3, h4) {
-  @apply flex items-center justify-between gap-1;
-
-  margin-bottom: 1em;
+  @apply mb-header flex items-center justify-between gap-1;
 }

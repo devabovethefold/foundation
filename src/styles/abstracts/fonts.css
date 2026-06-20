@@ -1,6 +1,8 @@
 @reference "tailwindcss";
 
 @theme inline {
+  --font-sans: var(--font-inter);
+
   --font-scale: 1.2;
 
   --text-h1: calc(1rem * pow(var(--font-scale), 5));
