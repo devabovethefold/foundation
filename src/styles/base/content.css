@@ -8,6 +8,9 @@
 @utility content-* {
   @apply gap-x-content grid;
 
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+
   --max-width-content: var(--max-width-content-md);
   --max-width-content: --value(--max-width-content-*);
 

@@ -1,6 +1,7 @@
 @theme {
   --padding-section: clamp(2rem, -1rem + 7.5vw, 5rem);
   --padding-hero: clamp(2rem, -3rem + 12.5vw, 7rem);
+  --padding-header: clamp(1rem, 0.8rem + 0.5vw, 1.2rem);
 
   --max-width-content-xs: 42rem;
   --max-width-content-sm: 60rem;

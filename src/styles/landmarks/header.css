@@ -1,3 +1,9 @@
+header:has(nav) {
+  @apply pb-header;
+
+  padding-top: calc(var(--padding-header) + env(safe-area-inset-top));
+}
+
 header:has(h2, h3, h4) {
   @apply mb-header flex items-center justify-between gap-1;
 }
