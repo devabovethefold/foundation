@@ -2,32 +2,32 @@
 
 @theme {
   /* --- Backgrounds --- */
-  --background-color-base-lo: var(--base-01);
-  --background-color-base-md: var(--base-10);
+  --background-color-base-lo: var(--base-50);
+  --background-color-base-md: var(--base-100);
   --background-color-base-hi: var(--base-500);
 
-  --background-color-accent-lo: var(--accent-01);
-  --background-color-accent-md: var(--accent-10);
+  --background-color-accent-lo: var(--accent-50);
+  --background-color-accent-md: var(--accent-100);
   --background-color-accent-hi: var(--accent-500);
 
-  --background-color-info-lo: var(--info-01);
-  --background-color-info-md: var(--info-10);
+  --background-color-info-lo: var(--info-50);
+  --background-color-info-md: var(--info-100);
   --background-color-info-hi: var(--info-500);
 
-  --background-color-success-lo: var(--success-01);
-  --background-color-success-md: var(--success-10);
+  --background-color-success-lo: var(--success-50);
+  --background-color-success-md: var(--success-100);
   --background-color-success-hi: var(--success-500);
 
-  --background-color-warning-lo: var(--warning-01);
-  --background-color-warning-md: var(--warning-10);
+  --background-color-warning-lo: var(--warning-50);
+  --background-color-warning-md: var(--warning-100);
   --background-color-warning-hi: var(--warning-500);
 
-  --background-color-error-lo: var(--error-01);
-  --background-color-error-md: var(--error-10);
+  --background-color-error-lo: var(--error-50);
+  --background-color-error-md: var(--error-100);
   --background-color-error-hi: var(--error-500);
 
-  --background-color-neutral-lo: var(--neutral-01);
-  --background-color-neutral-md: var(--neutral-10);
+  --background-color-neutral-lo: var(--neutral-50);
+  --background-color-neutral-md: var(--neutral-100);
   --background-color-neutral-hi: var(--neutral-500);
 
   /* --- Text --- */
@@ -35,37 +35,37 @@
   --text-color-base-lo: var(--base-500);
   --text-color-base-md: var(--base-700);
   --text-color-base-hi: var(--base-900);
-  --text-color-base-on: var(--base-01);
+  --text-color-base-on: var(--base-50);
 
   --text-color-accent-lo: var(--accent-500);
   --text-color-accent-md: var(--accent-700);
   --text-color-accent-hi: var(--accent-900);
-  --text-color-accent-on: var(--accent-01);
+  --text-color-accent-on: var(--accent-50);
 
   --text-color-info-lo: var(--info-500);
   --text-color-info-md: var(--info-700);
   --text-color-info-hi: var(--info-900);
-  --text-color-info-on: var(--info-01);
+  --text-color-info-on: var(--info-50);
 
   --text-color-success-lo: var(--success-500);
   --text-color-success-md: var(--success-700);
   --text-color-success-hi: var(--success-900);
-  --text-color-success-on: var(--success-01);
+  --text-color-success-on: var(--success-50);
 
   --text-color-warning-lo: var(--warning-500);
   --text-color-warning-md: var(--warning-700);
   --text-color-warning-hi: var(--warning-900);
-  --text-color-warning-on: var(--warning-01);
+  --text-color-warning-on: var(--warning-50);
 
   --text-color-error-lo: var(--error-500);
   --text-color-error-md: var(--error-700);
   --text-color-error-hi: var(--error-900);
-  --text-color-error-on: var(--error-01);
+  --text-color-error-on: var(--error-50);
 
   --text-color-neutral-lo: var(--neutral-500);
   --text-color-neutral-md: var(--neutral-700);
   --text-color-neutral-hi: var(--neutral-900);
-  --text-color-neutral-on: var(--neutral-01);
+  --text-color-neutral-on: var(--neutral-50);
 
   /* --- Border --- */
   /* Border Low: Subtle, MD: Normal, High: Focus/Primary */

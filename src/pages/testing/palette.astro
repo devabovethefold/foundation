@@ -2,9 +2,7 @@
 import Layout from '@layouts/Base.astro'
 import { BRAND_BASE } from '@utilities/themes/colors'
 
-const coreSteps = ['100', '200', '300', '400', '500', '600', '700', '800', '900']
-const lightSurfaceSteps = ['50']
-const darkSurfaceSteps = ['950']
+const coreSteps = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
 
 const scales = [
   { name: 'Primary', title: 'Primary', key: 'base' },
@@ -24,116 +22,87 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
   import { oklch, formatHex, parse } from 'culori'
   import Alpine from 'alpinejs'
 
+  const getCSSProp = (name: string, fallback: number) => {
+    if (typeof window === 'undefined') return fallback
+    const val = getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+    return val ? parseFloat(val) : fallback
+  }
+
   function getSemanticBases(brandBaseHex: string) {
     const origBase = oklch(parse(brandBaseHex)) as any
-    const origBaseL = origBase.l ?? 0.5
-    const origBaseC = origBase.c ?? 0
     const origBaseH = origBase.h ?? 0
+    
+    // We fetch presets from CSS to keep the preview dynamic
+    const presetL = getCSSProp('--preset-l', 0.55)
+    const presetC = getCSSProp('--preset-c', 0.18)
 
-    // Dynamic config read from CSS custom properties, falling back to safe defaults
-    const getCSSProp = (name: string, fallback: number) => {
-      if (typeof window === 'undefined') return fallback
-      const val = getComputedStyle(document.documentElement).getPropertyValue(name).trim()
-      return val ? parseFloat(val) : fallback
-    }
-
-    const chromaMin = getCSSProp('--palette-chroma-min', 0.14)
-    const chromaMax = getCSSProp('--palette-chroma-max', 0.22)
-    const lightnessMin = getCSSProp('--base-lightness-min', 0.30)
-    const lightnessMax = getCSSProp('--base-lightness-max', 0.70)
-
-    const baseL = Math.max(lightnessMin, Math.min(origBaseL, lightnessMax))
-    const baseC = Math.max(chromaMin, Math.min(origBaseC, chromaMax))
     const baseH = origBaseH
 
-    const base = { mode: 'oklch', l: baseL, c: baseC, h: baseH }
-
-    const accentL = Math.max(0.6, Math.min(baseL + 0.1, 0.85))
-    const accentC = Math.max(baseC, 0.16)
-    const accentH = (baseH + 180) % 360
+    const base = { mode: 'oklch', l: presetL, c: presetC, h: baseH }
 
     return {
       base,
-      accent: {
-        mode: 'oklch',
-        l: accentL,
-        c: accentC,
-        h: accentH
-      },
-      success: {
-        mode: 'oklch',
-        l: Math.max(0.6, Math.min(baseL + 0.25, 0.8)),
-        c: 0.18,
-        h: 143
-      },
-      info: {
-        mode: 'oklch',
-        l: Math.max(0.58, Math.min(baseL + 0.25, 0.78)),
-        c: 0.16,
-        h: 226
-      },
-      warning: {
-        mode: 'oklch',
-        l: Math.max(0.68, Math.min(baseL + 0.35, 0.88)),
-        c: 0.2,
-        h: 75
-      },
-      error: {
-        mode: 'oklch',
-        l: Math.max(0.55, Math.min(baseL + 0.2, 0.75)),
-        c: 0.22,
-        h: 25
-      },
-      neutral: {
-        mode: 'oklch',
-        l: Math.max(0.48, Math.min(baseL + 0.15, 0.62)),
-        c: 0.03,
-        h: baseH
-      }
+      accent: { mode: 'oklch', l: presetL, c: presetC, h: (baseH + 180) % 360 },
+      success: { mode: 'oklch', l: presetL, c: presetC, h: 143 },
+      info: { mode: 'oklch', l: presetL, c: presetC, h: 226 },
+      warning: { mode: 'oklch', l: presetL, c: presetC, h: 75 },
+      error: { mode: 'oklch', l: presetL, c: presetC, h: 25 },
+      neutral: { mode: 'oklch', l: presetL, c: 0.02, h: baseH }
     }
   }
 
   function generateScale(target: any) {
-    const steps = [100, 200, 300, 400, 500, 600, 700, 800, 900]
+    const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
     const scale: Record<string, string> = {}
 
-    const l = target.l ?? 0.5
-    const c = target.c ?? 0
+    const l = target.l ?? 0.55
+    const c = target.c ?? 0.18
     const h = target.h ?? 0
 
-    const L_max = Math.max(0.95, Math.min(l + (1.0 - l) * 0.9, 0.98))
-    const L_min = Math.max(0.04, Math.min(l * 0.25, 0.15))
+    const lStep = getCSSProp('--l-step', 0.06)
+    const lCurve = getCSSProp('--l-curve', 1.25)
+    const cStep = getCSSProp('--c-step', 0.02)
+    const cCurve = getCSSProp('--c-curve', 1.40)
+
+    const getLDist = (dist: number) => lStep * Math.pow(dist, lCurve)
+    const getCDist = (dist: number) => cStep * Math.pow(dist, cCurve)
 
     steps.forEach((step) => {
       let result: any
 
       switch (step) {
+        case 50:
+          result = { mode: 'oklch', l: Math.max(0, Math.min(0.985, l + getLDist(4.5))), c: Math.max(0, c - getCDist(4.5)), h }
+          break
         case 100:
-          result = { mode: 'oklch', l: L_max, c: c * 0.3, h }
+          result = { mode: 'oklch', l: Math.max(0, Math.min(1, l + getLDist(4))), c: Math.max(0, c - getCDist(4)), h }
           break
         case 200:
-          result = { mode: 'oklch', l: L_max * 0.8671875 + l * 0.15625 - L_min * 0.0234375, c: c * 0.475, h }
+          result = { mode: 'oklch', l: Math.max(0, Math.min(1, l + getLDist(3))), c: Math.max(0, c - getCDist(3)), h }
           break
         case 300:
-          result = { mode: 'oklch', l: L_max * 0.5625 + l * 0.5 - L_min * 0.0625, c: c * 0.65, h }
+          result = { mode: 'oklch', l: Math.max(0, Math.min(1, l + getLDist(2))), c: Math.max(0, c - getCDist(2)), h }
           break
         case 400:
-          result = { mode: 'oklch', l: L_max * 0.2265625 + l * 0.84375 - L_min * 0.0703125, c: c * 0.825, h }
+          result = { mode: 'oklch', l: Math.max(0, Math.min(1, l + getLDist(1))), c: Math.max(0, c - getCDist(1)), h }
           break
         case 500:
           result = { mode: 'oklch', l, c, h }
           break
         case 600:
-          result = { mode: 'oklch', l: -L_max * 0.0703125 + l * 0.84375 + L_min * 0.2265625, c: c * 0.835, h }
+          result = { mode: 'oklch', l: Math.max(0, Math.min(1, l - getLDist(1))), c: Math.max(0, c - getCDist(1)), h }
           break
         case 700:
-          result = { mode: 'oklch', l: -L_max * 0.0625 + l * 0.5 + L_min * 0.5625, c: c * 0.67, h }
+          result = { mode: 'oklch', l: Math.max(0, Math.min(1, l - getLDist(2))), c: Math.max(0, c - getCDist(2)), h }
           break
         case 800:
-          result = { mode: 'oklch', l: -L_max * 0.0234375 + l * 0.15625 + L_min * 0.8671875, c: c * 0.505, h }
+          result = { mode: 'oklch', l: Math.max(0, Math.min(1, l - getLDist(3))), c: Math.max(0, c - getCDist(3)), h }
           break
         case 900:
-          result = { mode: 'oklch', l: L_min, c: c * 0.34, h }
+          result = { mode: 'oklch', l: Math.max(0, Math.min(1, l - getLDist(4))), c: Math.max(0, c - getCDist(4)), h }
+          break
+        case 950:
+          result = { mode: 'oklch', l: Math.max(0, Math.min(1, l - getLDist(4.5))), c: Math.max(0, c - getCDist(4.5)), h }
           break
         default:
           result = { mode: 'oklch', l, c, h }
@@ -142,30 +111,6 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
       scale[step.toString()] = formatHex(result) || '#000000'
     })
 
-    return scale
-  }
-
-  // Generate surface steps
-  function generateSurface(target: any, type: 'light' | 'dark') {
-    const steps = type === 'light' ? ['50'] : ['950']
-    const scale: Record<string, string> = {}
-    
-    const l = target.l ?? 0.5
-    const c = target.c ?? 0
-    const h = target.h ?? 0
-
-    const L_max = Math.max(0.95, Math.min(l + (1.0 - l) * 0.9, 0.98))
-    const L_min = Math.max(0.04, Math.min(l * 0.25, 0.15))
-
-    steps.forEach(step => {
-      let resL: number
-      switch(step) {
-        case '50': resL = L_max + (1.0 - L_max) * 0.5; break
-        case '950': resL = L_min * 0.5; break
-        default: resL = l
-      }
-      scale[step] = formatHex({ mode: 'oklch', l: resL, c: c * 0.1, h }) || '#000000'
-    })
     return scale
   }
 
@@ -198,9 +143,7 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
           
           Object.keys(bases).forEach(key => {
             newScales[key] = {
-              core: generateScale(bases[key]),
-              light: generateSurface(bases[key], 'light'),
-              dark: generateSurface(bases[key], 'dark')
+              core: generateScale(bases[key])
             }
           })
           this.allScales = newScales
@@ -239,16 +182,13 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
 </script>
 
 <Layout {title} {description}>
-  <div
-    id="palette-container"
-    class="min-h-screen bg-slate-50/50 p-6 md:p-12"
-    data-brand-base={BRAND_BASE}
-  >
+  <section id="palette-container" class="content-2xl min-h-screen bg-slate-50/50 py-12" data-brand-base={BRAND_BASE}>
     
-    <!-- Top Level Wrapper: Allows columns to flow in a row on desktop and wrap on small screens -->
-    <div class="mx-auto flex max-w-[120rem] flex-wrap justify-between gap-12 xl:flex-nowrap xl:gap-16">
+    <!-- Top Level Wrapper: Flexbox allows natural column sizing -->
+    <div class="flex flex-wrap justify-between gap-12 xl:flex-nowrap xl:gap-16">
       
-      <div class="flex flex-col gap-6 xl:w-72 xl:shrink-0">
+      <!-- 1. Brand Color Group -->
+      <div class="flex flex-col gap-6 xl:w-[24rem] xl:shrink-0">
         <div class="flex items-center justify-between border-b-2 border-slate-200 pb-4">
           <div class="flex items-center gap-3">
             <div class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-sm font-bold text-slate-800">1</div>
@@ -295,35 +235,10 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
                  );
                })}
              </div>
-             <div class="stagger mt-2 flex gap-2">
-               <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
-                 {lightSurfaceSteps.map(step => (
-                    <div 
-                      class="fade slide-up stagger-item flex h-8 w-full items-center justify-center cursor-pointer transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md" 
-                      x-show="allScales.base"
-                      x-bind:style={`allScales.base ? 'background-color: ' + allScales.base.light['${step}'] : ''`}
-                      @click={`copyToClipboard(allScales.base.light['${step}'])`}
-                    >
-                      <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                    </div>
-                 ))}
-               </div>
-               <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
-                   {darkSurfaceSteps.map(step => (
-                    <div 
-                      class="fade slide-up stagger-item flex h-8 w-full items-center justify-center cursor-pointer transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md text-white" 
-                      x-show="allScales.base"
-                      x-bind:style={`allScales.base ? 'background-color: ' + allScales.base.dark['${step}'] : ''`}
-                      @click={`copyToClipboard(allScales.base.dark['${step}'])`}
-                    >
-                      <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                    </div>
-                 ))}
-               </div>
-             </div>
           </div>
         </div>
       </div>
+      <!-- 2. Semantic Colors Group -->
       <div class="flex flex-1 flex-col gap-6">
         <!-- Header -->
         <div class="flex items-center gap-3 border-b-2 border-slate-200 pb-4">
@@ -358,30 +273,6 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
                       </div>
                    );
                  })}
-               </div>
-               <div class="stagger mt-2 flex gap-2" x-show={"allScales['" + key + "']"}>
-                 <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
-                   {lightSurfaceSteps.map(step => (
-                      <div 
-                        class="fade slide-up stagger-item flex h-8 w-full items-center justify-center cursor-pointer transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md" 
-                        x-bind:style={`allScales['${key}'] ? 'background-color: ' + allScales['${key}'].light['${step}'] : ''`}
-                        @click={`copyToClipboard(allScales['${key}'].light['${step}'])`}
-                      >
-                        <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                      </div>
-                   ))}
-                 </div>
-                 <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
-                     {darkSurfaceSteps.map(step => (
-                      <div 
-                        class="fade slide-up stagger-item flex h-8 w-full items-center justify-center cursor-pointer transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md text-white" 
-                        x-bind:style={`allScales['${key}'] ? 'background-color: ' + allScales['${key}'].dark['${step}'] : ''`}
-                        @click={`copyToClipboard(allScales['${key}'].dark['${step}'])`}
-                      >
-                        <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                      </div>
-                   ))}
-                 </div>
                </div>
             </div>
           ))}
@@ -426,32 +317,6 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
                    );
                  })}
                </div>
-
-               <!-- Surfaces -->
-               <div class="stagger mt-2 flex gap-2" x-show={"allScales['" + key + "']"}>
-                 <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
-                   {lightSurfaceSteps.map(step => (
-                      <div 
-                        class="fade slide-up stagger-item flex h-8 w-full items-center justify-center cursor-pointer transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md text-slate-800" 
-                        x-bind:style={`allScales['${key}'] ? 'background-color: ' + allScales['${key}'].light['${step}'] : ''`}
-                        @click={`copyToClipboard(allScales['${key}'].light['${step}'])`}
-                      >
-                        <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                      </div>
-                   ))}
-                 </div>
-                 <div class="flex flex-1 flex-col overflow-hidden rounded-lg border border-slate-100 shadow-sm opacity-90">
-                     {darkSurfaceSteps.map(step => (
-                      <div 
-                        class="fade slide-up stagger-item flex h-8 w-full items-center justify-center cursor-pointer transition-all duration-500 hover:z-10 hover:scale-105 hover:shadow-md text-white" 
-                        x-bind:style={`allScales['${key}'] ? 'background-color: ' + allScales['${key}'].dark['${step}'] : ''`}
-                        @click={`copyToClipboard(allScales['${key}'].dark['${step}'])`}
-                      >
-                        <span class="text-[0.6rem] font-bold opacity-60">{step}</span>
-                      </div>
-                   ))}
-                 </div>
-               </div>
             </div>
           ))}
         </div>
@@ -472,5 +337,5 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
       x-text="toastMessage"
     >
     </div>
-  </div>
+  </section>
 </Layout>
