@@ -1,5 +1,7 @@
 :root {
   /* --color-brand: #195230; */
+  --color-*: initial;
+
   --color-brand: oklch(32.874% 0.0754 257.277);
 
   /* ── Design System Aesthetic Configuration ── */
