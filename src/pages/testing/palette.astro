@@ -1,6 +1,6 @@
 ---
 import Layout from '@layouts/Base.astro'
-import { BRAND_primary } from '@utilities/themes/colors'
+import { PRIMARY } from '@utilities/themes/colors'
 
 const coreSteps = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
 
@@ -188,7 +188,7 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
 </script>
 
 <Layout {title} {description}>
-  <section id="palette-container" class="content-3xl min-h-screen bg-slate-50/50" data-brand-primary={BRAND_primary}>
+  <section id="palette-container" class="content-3xl min-h-screen bg-slate-50/50" data-brand-primary={PRIMARY}>
     
     <!-- Top Level Wrapper: Flexbox allows natural column sizing -->
     <div class="flex flex-wrap justify-between gap-6 xl:flex-nowrap">

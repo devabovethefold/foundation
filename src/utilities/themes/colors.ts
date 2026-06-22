@@ -1,4 +1,4 @@
-import { oklch, formatHex, parse } from 'culori'
+import {oklch, formatHex, parse} from 'culori'
 
 type OKLCH = {
   mode: 'oklch'
@@ -8,6 +8,4 @@ type OKLCH = {
   alpha?: number
 }
 
-export const BRAND_BASE = '#195230'
-
-
+export const PRIMARY = '#195230'
