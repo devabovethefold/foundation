@@ -2,9 +2,12 @@
 
 @variant dark {
   /* --- Backgrounds --- */
-  --background-color-base-lo: var(--base-950);
-  --background-color-base-md: var(--base-900);
-  --background-color-base-hi: var(--base-500);
+  --background-color-primary-lo: var(--primary-950);
+  --background-color-secondary-lo: var(--secondary-950);
+  --background-color-primary-md: var(--primary-900);
+  --background-color-secondary-md: var(--secondary-900);
+  --background-color-primary-hi: var(--primary-500);
+  --background-color-secondary-hi: var(--secondary-500);
 
   --background-color-accent-lo: var(--accent-950);
   --background-color-accent-md: var(--accent-900);
@@ -31,10 +34,14 @@
   --background-color-neutral-hi: var(--neutral-500);
 
   /* --- Text --- */
-  --text-color-base-lo: var(--base-500);
-  --text-color-base-md: var(--base-300);
-  --text-color-base-hi: var(--base-100);
-  --text-color-base-on: var(--base-50);
+  --text-color-primary-lo: var(--primary-500);
+  --text-color-secondary-lo: var(--secondary-500);
+  --text-color-primary-md: var(--primary-300);
+  --text-color-secondary-md: var(--secondary-300);
+  --text-color-primary-hi: var(--primary-100);
+  --text-color-secondary-hi: var(--secondary-100);
+  --text-color-primary-on: var(--primary-50);
+  --text-color-secondary-on: var(--secondary-50);
 
   --text-color-accent-lo: var(--accent-500);
   --text-color-accent-md: var(--accent-300);
@@ -67,9 +74,12 @@
   --text-color-neutral-on: var(--neutral-50);
 
   /* --- Border --- */
-  --border-color-base-lo: var(--base-800);
-  --border-color-base-md: var(--base-700);
-  --border-color-base-hi: var(--base-400);
+  --border-color-primary-lo: var(--primary-800);
+  --border-color-secondary-lo: var(--secondary-800);
+  --border-color-primary-md: var(--primary-700);
+  --border-color-secondary-md: var(--secondary-700);
+  --border-color-primary-hi: var(--primary-400);
+  --border-color-secondary-hi: var(--secondary-400);
 
   --border-color-accent-lo: var(--accent-800);
   --border-color-accent-md: var(--accent-700);
@@ -96,9 +106,12 @@
   --border-color-neutral-hi: var(--neutral-500);
 
   /* --- Shadow --- */
-  --box-shadow-color-base-lo: oklch(from var(--base-900) l c h / 0.3);
-  --box-shadow-color-base-md: oklch(from var(--base-900) l c h / 0.4);
-  --box-shadow-color-base-hi: oklch(from var(--base-900) l c h / 0.5);
+  --box-shadow-color-primary-lo: oklch(from var(--primary-900) l c h / 0.3);
+  --box-shadow-color-secondary-lo: oklch(from var(--secondary-900) l c h / 0.3);
+  --box-shadow-color-primary-md: oklch(from var(--primary-900) l c h / 0.4);
+  --box-shadow-color-secondary-md: oklch(from var(--secondary-900) l c h / 0.4);
+  --box-shadow-color-primary-hi: oklch(from var(--primary-900) l c h / 0.5);
+  --box-shadow-color-secondary-hi: oklch(from var(--secondary-900) l c h / 0.5);
 
   --box-shadow-color-accent-lo: oklch(from var(--accent-900) l c h / 0.12);
   --box-shadow-color-accent-md: oklch(from var(--accent-900) l c h / 0.24);
@@ -123,4 +136,36 @@
   --box-shadow-color-neutral-lo: oklch(from var(--neutral-900) l c h / 0.12);
   --box-shadow-color-neutral-md: oklch(from var(--neutral-900) l c h / 0.24);
   --box-shadow-color-neutral-hi: oklch(from var(--neutral-900) l c h / 0.36);
+
+  /* --- Ring --- */
+  --ring-color-primary-lo: var(--primary-950);
+  --ring-color-secondary-lo: var(--secondary-950);
+  --ring-color-primary-md: var(--primary-900);
+  --ring-color-secondary-md: var(--secondary-900);
+  --ring-color-primary-hi: var(--primary-500);
+  --ring-color-secondary-hi: var(--secondary-500);
+
+  --ring-color-accent-lo: var(--accent-950);
+  --ring-color-accent-md: var(--accent-900);
+  --ring-color-accent-hi: var(--accent-500);
+
+  --ring-color-info-lo: var(--info-950);
+  --ring-color-info-md: var(--info-900);
+  --ring-color-info-hi: var(--info-500);
+
+  --ring-color-success-lo: var(--success-950);
+  --ring-color-success-md: var(--success-900);
+  --ring-color-success-hi: var(--success-500);
+
+  --ring-color-warning-lo: var(--warning-950);
+  --ring-color-warning-md: var(--warning-900);
+  --ring-color-warning-hi: var(--warning-500);
+
+  --ring-color-error-lo: var(--error-950);
+  --ring-color-error-md: var(--error-900);
+  --ring-color-error-hi: var(--error-500);
+
+  --ring-color-neutral-lo: var(--neutral-950);
+  --ring-color-neutral-md: var(--neutral-900);
+  --ring-color-neutral-hi: var(--neutral-500);
 }

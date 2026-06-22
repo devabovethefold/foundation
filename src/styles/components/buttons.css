@@ -1,0 +1,51 @@
+@reference "tailwindcss";
+
+button,
+.btn {
+  @apply box-border w-fit cursor-pointer rounded-sm border px-4 py-2 text-sm leading-tight font-semibold ring-offset-2 outline-0 transition-all duration-500 hover:opacity-80 focus:ring-2;
+}
+
+.btn-sm {
+  @apply px-3 py-1.5;
+}
+
+.btn-md {
+  @apply px-4 py-2;
+}
+
+.btn-lg {
+  @apply px-6 py-3;
+}
+
+.btn-primary {
+  @apply border-primary-hi bg-primary-hi text-primary-on focus:ring-primary-md;
+}
+
+.btn-secondary {
+  @apply border-secondary-hi bg-secondary-hi text-secondary-on focus:ring-secondary-md;
+}
+
+.btn-accent {
+  @apply border-accent-hi bg-accent-hi text-accent-on focus:ring-accent-md;
+}
+
+.btn-info {
+  @apply border-info-hi bg-info-hi text-info-on focus:ring-info-md;
+}
+
+.btn-success {
+  @apply border-success-hi bg-success-hi text-success-on focus:ring-success-md;
+}
+
+.btn-warning {
+  @apply border-warning-hi bg-warning-hi text-warning-on focus:ring-warning-md;
+}
+
+.btn-error {
+  @apply border-error-hi bg-error-hi text-error-on focus:ring-error-md;
+}
+
+.btn-neutral,
+:is(button, .btn):disabled {
+  @apply border-neutral-hi bg-neutral-hi text-neutral-on focus:ring-neutral-md;
+}

@@ -9,7 +9,12 @@
 @import './base/content.css';
 @import './base/typography.css';
 
+/* themes */
+@import './themes/dark.css';
+@import './themes/light.css';
+
 /* components */
+@import './components/buttons.css';
 
 /* landmarks */
 @import './landmarks/forms.css';

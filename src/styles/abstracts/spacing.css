@@ -9,6 +9,7 @@
   --max-width-content-lg: 86.25rem;
   --max-width-content-xl: 100rem;
   --max-width-content-2xl: 117rem;
+  --max-width-content-3xl: 130rem;
 
   --gap-content: clamp(0.5rem, -1rem + 3.75vw, 2rem);
 

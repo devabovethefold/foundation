@@ -1,11 +1,12 @@
 ---
 import Layout from '@layouts/Base.astro'
-import { BRAND_BASE } from '@utilities/themes/colors'
+import { BRAND_primary } from '@utilities/themes/colors'
 
 const coreSteps = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
 
 const scales = [
-  { name: 'Primary', title: 'Primary', key: 'base' },
+  { name: 'Primary', title: 'Primary', key: 'primary' },
+  { name: 'Secondary', title: 'Secondary', key: 'secondary' },
   { name: 'Success', title: 'Success', key: 'success' },
   { name: 'Info', title: 'Info', key: 'info' },
   { name: 'Warning', title: 'Warning', key: 'warning' },
@@ -19,7 +20,7 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
 ---
 
 <script>
-  import { oklch, formatHex, parse } from 'culori'
+  import { oklch, parse } from 'culori'
   import Alpine from 'alpinejs'
 
   const getCSSProp = (name: string, fallback: number) => {
@@ -28,30 +29,32 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
     return val ? parseFloat(val) : fallback
   }
 
-  function getSemanticBases(brandBaseHex: string) {
-    const origBase = oklch(parse(brandBaseHex)) as any
-    const origBaseH = origBase.h ?? 0
+
+  function getSemanticprimarys(brandprimaryHex: string) {
+    const origprimary = oklch(parse(brandprimaryHex)) as any
+    const origprimaryH = origprimary.h ?? 0
     
     // We fetch presets from CSS to keep the preview dynamic
     const presetL = getCSSProp('--preset-l', 0.55)
     const presetC = getCSSProp('--preset-c', 0.18)
 
-    const baseH = origBaseH
+    const primaryH = origprimaryH
 
-    const base = { mode: 'oklch', l: presetL, c: presetC, h: baseH }
+    const primary = { mode: 'oklch', l: presetL, c: presetC, h: primaryH }
 
     return {
-      base,
-      accent: { mode: 'oklch', l: presetL, c: presetC, h: (baseH + 180) % 360 },
+      primary,
+      secondary: { mode: 'oklch', l: presetL, c: presetC, h: (primaryH - 45 + 360) % 360 },
+      accent: { mode: 'oklch', l: presetL, c: presetC, h: (primaryH + 180) % 360 },
       success: { mode: 'oklch', l: presetL, c: presetC, h: 143 },
       info: { mode: 'oklch', l: presetL, c: presetC, h: 226 },
       warning: { mode: 'oklch', l: presetL, c: presetC, h: 75 },
       error: { mode: 'oklch', l: presetL, c: presetC, h: 25 },
-      neutral: { mode: 'oklch', l: presetL, c: 0.02, h: baseH }
+      neutral: { mode: 'oklch', l: presetL, c: presetC * 0.12, h: primaryH }
     }
   }
 
-  function generateScale(target: any) {
+  function generateScale(target: any, isNeutral = false) {
     const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
     const scale: Record<string, string> = {}
 
@@ -65,7 +68,10 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
     const cCurve = getCSSProp('--c-curve', 1.40)
 
     const getLDist = (dist: number) => lStep * Math.pow(dist, lCurve)
-    const getCDist = (dist: number) => cStep * Math.pow(dist, cCurve)
+    const getCDist = (dist: number) => {
+      const primaryDist = cStep * Math.pow(dist, cCurve)
+      return isNeutral ? primaryDist * 0.12 : primaryDist
+    }
 
     steps.forEach((step) => {
       let result: any
@@ -108,7 +114,7 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
           result = { mode: 'oklch', l, c, h }
       }
 
-      scale[step.toString()] = formatHex(result) || '#000000'
+      scale[step.toString()] = `oklch(${Math.round(result.l * 1000) / 1000} ${Math.round(result.c * 1000) / 1000} ${Math.round(result.h * 10) / 10})`
     })
 
     return scale
@@ -124,26 +130,26 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
     const container = document.getElementById('palette-container')
     if (container && !container.hasAttribute('x-data')) {
       activeAlpine.data('palette', () => ({
-        brandBase: activeAlpine.$persist(
-          container.dataset.brandBase || '#195230'
+        brandprimary: activeAlpine.$persist(
+          container.dataset.brandprimary || '#195230'
         ).as('brandColor'),
         allScales: {},
         toastMessage: '',
         showToast: false,
         
         init() {
-          this.$watch('brandBase', () => this.updateScales())
+          this.$watch('brandprimary', () => this.updateScales())
           this.updateScales()
         },
 
         updateScales() {
-          if (!this.brandBase || !this.brandBase.startsWith('#') || this.brandBase.length !== 7) return
-          const bases = getSemanticBases(this.brandBase)
+          if (!this.brandprimary || !this.brandprimary.startsWith('#') || this.brandprimary.length !== 7) return
+          const primarys = getSemanticprimarys(this.brandprimary)
           const newScales = {}
           
-          Object.keys(bases).forEach(key => {
+          Object.keys(primarys).forEach(key => {
             newScales[key] = {
-              core: generateScale(bases[key])
+              core: generateScale(primarys[key], key === 'neutral')
             }
           })
           this.allScales = newScales
@@ -182,14 +188,14 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
 </script>
 
 <Layout {title} {description}>
-  <section id="palette-container" class="content-2xl min-h-screen bg-slate-50/50 py-12" data-brand-base={BRAND_BASE}>
+  <section id="palette-container" class="content-3xl min-h-screen bg-slate-50/50" data-brand-primary={BRAND_primary}>
     
     <!-- Top Level Wrapper: Flexbox allows natural column sizing -->
-    <div class="flex flex-wrap justify-between gap-12 xl:flex-nowrap xl:gap-16">
+    <div class="flex flex-wrap justify-between gap-6 xl:flex-nowrap">
       
       <!-- 1. Brand Color Group -->
-      <div class="flex flex-col gap-6 xl:w-[24rem] xl:shrink-0">
-        <div class="flex items-center justify-between border-b-2 border-slate-200 pb-4">
+      <div class="flex flex-col gap-6 xl:w-fit xl:shrink-0">
+        <div class="flex items-center justify-between border-b-2 border-slate-200 pb-4 gap-x-3">
           <div class="flex items-center gap-3">
             <div class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-sm font-bold text-slate-800">1</div>
             <h2 class="text-lg font-bold tracking-tight text-slate-800">Brand Color</h2>
@@ -197,57 +203,59 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
           <div class="flex items-center gap-2">
             <input 
               type="color" 
-              x-model="brandBase" 
+              x-model="brandprimary" 
               class="h-8 w-8 cursor-pointer rounded border-0 bg-transparent p-0"
             />
             <input 
               type="text" 
-              x-model="brandBase" 
-              class="w-20 rounded border border-slate-200 bg-white px-2 py-1 font-mono text-[10px] font-bold uppercase text-slate-600 focus:border-base-hi focus:outline-none"
+              x-model="brandprimary" 
+              class="w-20 rounded border border-slate-200 bg-white px-2 py-1 font-mono text-[10px] font-bold uppercase text-slate-600 focus:border-primary-hi focus:outline-none"
               placeholder="#000000"
             />
           </div>
         </div>
         <div class="grid grid-cols-1 gap-8">
-          <div class="flex flex-col gap-4">
-            <div class="fade slide-up flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors" x-show="allScales.base" @click="copyToClipboard(allScales.base?.core['500'])">
-              <div class="flex flex-col">
-                <span class="text-[0.65rem] font-bold tracking-wider text-slate-400 uppercase">Primary</span>
-                <div class="mt-1 flex items-center gap-2">
-                  <div class="h-6 w-6 rounded shadow-inner transition-colors duration-500" x-bind:style="allScales.base ? 'background-color: ' + allScales.base.core['500'] : ''"></div>
-                  <code class="font-mono text-sm font-bold text-slate-800" x-text="allScales.base?.core['500']"></code>
+          {['primary'].map(key => (
+            <div class="flex flex-col gap-4">
+              <div class="fade slide-up flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors" x-show={"allScales['" + key + "']"} @click={`copyToClipboard(allScales['${key}']?.core['500'])`}>
+                <div class="flex flex-col">
+                  <span class="text-[0.65rem] font-bold tracking-wider text-slate-400 capitalize" x-text={`'${key}'`}></span>
+                  <div class="mt-1 flex items-center gap-2">
+                    <div class="h-6 w-6 rounded shadow-inner transition-colors duration-500" x-bind:style={`allScales['${key}'] ? 'background-color: ' + allScales['${key}'].core['500'] : ''`}></div>
+                    <code class="font-mono text-sm font-bold text-slate-800" x-text={"allScales['" + key + "']?.core['500']"}></code>
+                  </div>
                 </div>
               </div>
+               <div class="stagger flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm" x-show={"allScales['" + key + "']"}>
+                 {coreSteps.map((step) => {
+                   const isDark = parseInt(step) >= 500;
+                   return (
+                      <div 
+                        class={`fade slide-up stagger-item group flex h-[3.25rem] w-full cursor-pointer items-center justify-between px-4 transition-all duration-500 hover:z-10 hover:scale-[1.02] hover:shadow-md ${isDark ? 'text-white' : 'text-slate-800'}`} 
+                        x-bind:style={`allScales['${key}'] ? 'background-color: ' + allScales['${key}'].core['${step}'] : ''`}
+                        @click={`copyToClipboard(allScales['${key}'].core['${step}'])`}
+                      >
+                        <span class="w-8 text-xs font-bold opacity-60">{step}</span>
+                        <span class="font-mono text-xs font-semibold tracking-wider opacity-0 transition-opacity group-hover:opacity-100" x-text={`allScales['${key}']?.core['${step}']`}></span>
+                      </div>
+                   );
+                 })}
+               </div>
             </div>
-             <div class="stagger flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
-               {coreSteps.map((step) => {
-                 const isDark = parseInt(step) >= 500;
-                 return (
-                    <div 
-                      class={`fade slide-up stagger-item group flex h-[3.25rem] w-full cursor-pointer items-center justify-between px-4 transition-all duration-500 hover:z-10 hover:scale-[1.02] hover:shadow-md ${isDark ? 'text-white' : 'text-slate-800'}`} 
-                      x-show="allScales.base"
-                      x-bind:style={`allScales.base ? 'background-color: ' + allScales.base.core['${step}'] : ''`}
-                      @click={`copyToClipboard(allScales.base.core['${step}'])`}
-                    >
-                      <span class="w-8 text-xs font-bold opacity-60">{step}</span>
-                      <span class="font-mono text-xs font-semibold tracking-wider opacity-0 transition-opacity group-hover:opacity-100" x-text={`allScales.base?.core['${step}']`}></span>
-                    </div>
-                 );
-               })}
-             </div>
-          </div>
+          ))}
         </div>
       </div>
-      <!-- 2. Semantic Colors Group -->
-      <div class="flex flex-1 flex-col gap-6">
+
+      <!-- 2. Support Colors Group -->
+      <div class="flex flex-col gap-6 xl:w-fit xl:shrink-0">
         <!-- Header -->
         <div class="flex items-center gap-3 border-b-2 border-slate-200 pb-4">
           <div class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-sm font-bold text-slate-800">2</div>
-          <h2 class="text-lg font-bold tracking-tight text-slate-800">Semantic Colors</h2>
+          <h2 class="text-lg font-bold tracking-tight text-slate-800">Support Colors</h2>
         </div>
         <!-- Column Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 max-xl:gap-8 lg:grid-cols-4 xl:gap-6">
-          {['success', 'info', 'warning', 'error'].map(key => (
+        <div class="grid grid-cols-1 sm:grid-cols-3 max-xl:gap-8 xl:gap-6">
+          {['secondary', 'accent', 'neutral'].map(key => (
             <div class="flex flex-col gap-4">
               <!-- Top Card Preview -->
               <div class="fade slide-up flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors" x-show={"allScales['" + key + "']"} @click={`copyToClipboard(allScales['${key}']?.core['500'])`}>
@@ -259,6 +267,8 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
                   </div>
                 </div>
               </div>
+
+               <!-- Core Scale -->
                <div class="stagger flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm" x-show={"allScales['" + key + "']"}>
                  {coreSteps.map(step => {
                    const isDark = parseInt(step) >= 500;
@@ -278,17 +288,16 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
           ))}
         </div>
       </div>
-
-      <!-- 3. Support Colors Group -->
-      <div class="flex flex-col gap-6 xl:w-[28rem] xl:shrink-0">
+      <!-- 3. Semantic Colors Group -->
+      <div class="flex flex-1 flex-col gap-6">
         <!-- Header -->
         <div class="flex items-center gap-3 border-b-2 border-slate-200 pb-4">
           <div class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 bg-white text-sm font-bold text-slate-800">3</div>
-          <h2 class="text-lg font-bold tracking-tight text-slate-800">Support Colors</h2>
+          <h2 class="text-lg font-bold tracking-tight text-slate-800">Semantic Colors</h2>
         </div>
         <!-- Column Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 max-xl:gap-8 xl:gap-6">
-          {['accent', 'neutral'].map(key => (
+        <div class="grid grid-cols-1 sm:grid-cols-2 max-xl:gap-8 lg:grid-cols-4 xl:gap-6">
+          {['success', 'info', 'warning', 'error'].map(key => (
             <div class="flex flex-col gap-4">
               <!-- Top Card Preview -->
               <div class="fade slide-up flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors" x-show={"allScales['" + key + "']"} @click={`copyToClipboard(allScales['${key}']?.core['500'])`}>
@@ -300,8 +309,6 @@ const description = 'Dynamic OKLCH color palette generator and previewer'
                   </div>
                 </div>
               </div>
-
-               <!-- Core Scale -->
                <div class="stagger flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm" x-show={"allScales['" + key + "']"}>
                  {coreSteps.map(step => {
                    const isDark = parseInt(step) >= 500;
