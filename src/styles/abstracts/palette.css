@@ -1,41 +1,51 @@
 :root {
   /* --color-brand: #195230; */
-  --color-*: initial;
-
   --color-brand: oklch(32.874% 0.0754 257.277);
 
   /* ── Design System Aesthetic Configuration ── */
-  /* Creative */
-  /* --preset-l: 0.55;
+}
+
+/* Creative (Default) */
+:root, [data-aesthetic="creative"] {
+  --preset-l: 0.55;
   --preset-c: 0.18;
   --l-step: 0.06;
   --l-curve: 1.25;
   --c-step: 0.02;
-  --c-curve: 1.4; */
+  --c-curve: 1.4;
+}
 
-  /* Professional */
-  /* --preset-l: 0.5;
+/* Professional */
+[data-aesthetic="professional"] {
+  --preset-l: 0.5;
   --preset-c: 0.1;
   --l-step: 0.07;
   --l-curve: 1.2;
   --c-step: 0.015;
-  --c-curve: 1.5; */
+  --c-curve: 1.5;
+}
 
-  /* Playful / Web3 */
+/* Playful / Web3 */
+[data-aesthetic="playful"] {
   --preset-l: 0.6;
   --preset-c: 0.22;
   --l-step: 0.065;
   --l-curve: 1.2;
   --c-step: 0.025;
   --c-curve: 1.4;
+}
 
-  /* Elegant / Luxury */
-  /* --preset-l: 0.5;
+/* Elegant / Luxury */
+[data-aesthetic="elegant"] {
+  --preset-l: 0.5;
   --preset-c: 0.08;
   --l-step: 0.08;
   --l-curve: 1.15;
   --c-step: 0.01;
-  --c-curve: 1.3; */
+  --c-curve: 1.3;
+}
+
+:root {
 
   /* ── Math Helpers ── */
   --l-dist-1: calc(var(--l-step) * pow(1, var(--l-curve)));

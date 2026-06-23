@@ -1,0 +1,5 @@
+@reference "tailwindcss";
+
+html {
+  @apply text-neutral-hi bg-white scheme-light-dark dark:bg-black;
+}

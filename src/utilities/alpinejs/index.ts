@@ -11,6 +11,12 @@ interface ThemeStore {
   toggle(): void
 }
 
+interface AestheticStore {
+  value: string
+  init(): void
+  set(aesthetic: string): void
+}
+
 interface DrawerStore {
   open: boolean
   toggle(): void
@@ -38,6 +44,20 @@ export default (Alpine: AlpineType) => {
 
     toggle(this: ThemeStore) {
       this.mode = this.mode === 'light' ? 'dark' : 'light'
+    }
+  })
+
+  Alpine.store('aesthetic', {
+    value: (Alpine as any).$persist('creative').as('aesthetic'),
+
+    init(this: AestheticStore) {
+      Alpine.effect(() => {
+        document.documentElement.setAttribute('data-aesthetic', this.value)
+      })
+    },
+
+    set(this: AestheticStore, aesthetic: string) {
+      this.value = aesthetic
     }
   })
 

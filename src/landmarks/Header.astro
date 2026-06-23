@@ -1,11 +1,28 @@
 ---
-
+import {Icon} from '@twodft/astro-icon/components'
 ---
 
 <header class="content-md">
-  <nav class="flex items-center gap-x-6">
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/contact" class="btn btn-primary">Contact</a>
+  <nav class="flex items-center justify-between gap-x-6">
+    <ul class="flex items-center gap-x-6">
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/about">About</a>
+      </li>
+      <li>
+        <a href="/contact" class="btn btn-primary">Contact</a>
+      </li>
+    </ul>
+    <div class="flex items-center justify-between gap-4">
+      <button x-data @click="$store.theme.toggle()" :aria-label="$store.theme.label" class="btn-transparent border-0! p-0!">
+        <Icon name="mdi:moon-waning-crescent" class="hidden -rotate-25 dark:block" />
+        <Icon name="mdi:white-balance-sunny" class="dark:hidden" />
+      </button>
+      <button x-data @click="$store.drawer.toggle()" aria-label="Open mobile navigation menu" class="p-0! md:hidden!">
+        <Icon name="mdi:menu" />
+      </button>
+    </div>
   </nav>
 </header>

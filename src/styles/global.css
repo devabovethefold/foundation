@@ -12,6 +12,7 @@
 /* themes */
 @import './themes/dark.css';
 @import './themes/light.css';
+@import './themes/colors.css';
 
 /* components */
 @import './components/buttons.css';

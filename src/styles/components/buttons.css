@@ -49,3 +49,7 @@ button,
 :is(button, .btn):disabled {
   @apply border-neutral-hi bg-neutral-hi text-neutral-on focus:ring-neutral-md;
 }
+
+.btn-transparent {
+  @apply bg-transparent! focus:ring-transparent!;
+}

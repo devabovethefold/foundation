@@ -4,6 +4,8 @@ import {Font} from 'astro:assets'
 
 import '@styles/global.css'
 
+import initTheme from '@utilities/theme/init?raw'
+
 interface Props {
   title: string
   description: string
@@ -32,7 +34,8 @@ const {title, description} = Astro.props
   <link rel="apple-touch-icon" href="icon.png" />
 
   <link rel="manifest" href="site.webmanifest" />
-  <meta name="theme-color" content="#fafafa" />
+  <!-- <meta name="theme-color" content="#fafafa" /> -->
+  <script is:inline set:html={initTheme} />
 
   <meta name="generator" content={Astro.generator} />
   <Font cssVariable="--font-inter" preload />

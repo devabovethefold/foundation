@@ -17,6 +17,7 @@
     "@astrojs/alpinejs": "^0.5.0",
     "@astrojs/cloudflare": "^13.7.0",
     "@tailwindcss/vite": "^4.3.1",
+    "@twodft/astro-icon": "^1.2.4",
     "@types/alpinejs": "^3.13.11",
     "alpinejs": "^3.15.12",
     "astro": "^6.4.7",
@@ -27,6 +28,7 @@
     "vite": "^7"
   },
   "devDependencies": {
+    "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/forms": "^0.5.11",
     "culori": "^4.0.2",
     "prettier": "3.8.4",

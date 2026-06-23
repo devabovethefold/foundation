@@ -1,8 +1,8 @@
-// @ts-check
 import {defineConfig, envField, fontProviders} from 'astro/config'
 
 import alpinejs from '@astrojs/alpinejs'
 import cloudflare from '@astrojs/cloudflare'
+import icon from '@twodft/astro-icon'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
@@ -40,6 +40,12 @@ export default defineConfig({
   integrations: [
     alpinejs({
       entrypoint: './src/utilities/alpinejs/index.ts'
+    }),
+    icon({
+      iconDir: 'src/assets/icons',
+      include: {
+        mdi: ['menu', 'moon-waning-crescent', 'white-balance-sunny']
+      }
     })
   ],
   output: 'server',
