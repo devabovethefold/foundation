@@ -1,5 +1,5 @@
 @reference "tailwindcss";
 
 html {
-  @apply text-neutral-hi bg-white scheme-light-dark dark:bg-black;
+  @apply text-neutral-hi bg-[color-mix(in_oklch,#fff,var(--neutral-50)_10%)] scheme-light-dark dark:bg-[color-mix(in_oklch,#000,var(--neutral-950)_10%)];
 }

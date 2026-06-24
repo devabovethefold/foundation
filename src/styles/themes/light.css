@@ -3,10 +3,11 @@
 @theme {
   /* --- Backgrounds --- */
   --background-color-primary-lo: var(--primary-50);
-  --background-color-secondary-lo: var(--secondary-50);
   --background-color-primary-md: var(--primary-100);
-  --background-color-secondary-md: var(--secondary-100);
   --background-color-primary-hi: var(--primary-500);
+
+  --background-color-secondary-lo: var(--secondary-50);
+  --background-color-secondary-md: var(--secondary-100);
   --background-color-secondary-hi: var(--secondary-500);
 
   --background-color-accent-lo: var(--accent-50);
@@ -36,12 +37,13 @@
   /* --- Text --- */
   /* Text Low: Muted, MD: Body text, High: Headings/Emphasis, On: Text on saturated backgrounds */
   --text-color-primary-lo: var(--primary-500);
-  --text-color-secondary-lo: var(--secondary-500);
   --text-color-primary-md: var(--primary-700);
-  --text-color-secondary-md: var(--secondary-700);
   --text-color-primary-hi: var(--primary-900);
-  --text-color-secondary-hi: var(--secondary-900);
   --text-color-primary-on: var(--primary-50);
+
+  --text-color-secondary-lo: var(--secondary-500);
+  --text-color-secondary-md: var(--secondary-700);
+  --text-color-secondary-hi: var(--secondary-900);
   --text-color-secondary-on: var(--secondary-50);
 
   --text-color-accent-lo: var(--accent-500);
@@ -77,10 +79,11 @@
   /* --- Border --- */
   /* Border Low: Subtle, MD: Normal, High: Focus/Primary */
   --border-color-primary-lo: var(--primary-200);
-  --border-color-secondary-lo: var(--secondary-200);
   --border-color-primary-md: var(--primary-400);
-  --border-color-secondary-md: var(--secondary-400);
   --border-color-primary-hi: var(--primary-500);
+
+  --border-color-secondary-lo: var(--secondary-200);
+  --border-color-secondary-md: var(--secondary-400);
   --border-color-secondary-hi: var(--secondary-500);
 
   --border-color-accent-lo: var(--accent-200);
@@ -110,10 +113,11 @@
   /* --- Shadow --- */
   /* Alpha-based translucent colors using OKLCH relative transformation (Alphredo-style) */
   --box-shadow-color-primary-lo: oklch(from var(--primary-900) l c h / 0.15);
-  --box-shadow-color-secondary-lo: oklch(from var(--secondary-900) l c h / 0.15);
   --box-shadow-color-primary-md: oklch(from var(--primary-900) l c h / 0.2);
-  --box-shadow-color-secondary-md: oklch(from var(--secondary-900) l c h / 0.2);
   --box-shadow-color-primary-hi: oklch(from var(--primary-900) l c h / 0.25);
+
+  --box-shadow-color-secondary-lo: oklch(from var(--secondary-900) l c h / 0.15);
+  --box-shadow-color-secondary-md: oklch(from var(--secondary-900) l c h / 0.2);
   --box-shadow-color-secondary-hi: oklch(from var(--secondary-900) l c h / 0.25);
 
   --box-shadow-color-accent-lo: oklch(from var(--accent-900) l c h / 0.04);
@@ -142,10 +146,11 @@
 
   /* --- Ring --- */
   --ring-color-primary-lo: var(--primary-50);
-  --ring-color-secondary-lo: var(--secondary-50);
   --ring-color-primary-md: var(--primary-100);
-  --ring-color-secondary-md: var(--secondary-100);
   --ring-color-primary-hi: var(--primary-500);
+
+  --ring-color-secondary-lo: var(--secondary-50);
+  --ring-color-secondary-md: var(--secondary-100);
   --ring-color-secondary-hi: var(--secondary-500);
 
   --ring-color-accent-lo: var(--accent-50);

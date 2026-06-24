@@ -66,7 +66,7 @@ const description = 'Starting with a solid base.'
     <header>
       <h2>Here Is Another Section</h2>
     </header>
-    <form>
+    <form class="grid lg:grid-cols-2">
       <div>
         <label for="name">Full Name</label>
         <input id="name" name="name" type="text" placeholder="Jane Doe" />
@@ -122,7 +122,7 @@ const description = 'Starting with a solid base.'
         </select>
       </div>
 
-      <div>
+      <div class="lg:col-span-full">
         <label for="skills">Skills</label>
         <select id="skills" name="skills" multiple>
           <option value="html">HTML</option>
@@ -132,7 +132,7 @@ const description = 'Starting with a solid base.'
         </select>
       </div>
 
-      <div>
+      <div class="lg:col-span-full">
         <label for="bio">Bio</label>
         <textarea id="bio" name="bio" rows="4"></textarea>
       </div>
@@ -170,7 +170,7 @@ const description = 'Starting with a solid base.'
         <input id="avatar" name="avatar" type="file" />
       </div>
 
-      <div>
+      <div class="lg:col-span-full">
         <button type="submit">Submit</button>
 
         <button type="reset">Reset</button>

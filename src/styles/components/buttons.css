@@ -2,7 +2,7 @@
 
 button,
 .btn {
-  @apply box-border w-fit cursor-pointer rounded-sm border px-4 py-2 text-sm leading-tight font-semibold ring-offset-2 outline-0 transition-all duration-500 hover:opacity-80 focus:ring-2;
+  @apply box-border w-fit cursor-pointer rounded-sm border px-4 py-2 text-sm leading-tight font-semibold ring-offset-2 outline-0 transition-all duration-500 hover:opacity-80 focus:shadow-none focus:ring-2;
 }
 
 .btn-sm {
